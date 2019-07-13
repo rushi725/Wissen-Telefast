@@ -3,6 +3,7 @@ package com.telefast.sfs.model;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,12 +23,13 @@ public class Project {
 	private String name;
 	private LocalDateTime startDate;
 	private LocalDateTime deliveryDate;
+	@Enumerated
 	private Status status;
 	private int progress;
 
 	@OneToOne
 	private Customer customer;
-	@ManyToOne
+	@OneToOne
 	private Employee projectManager;
 
 	public Project() {

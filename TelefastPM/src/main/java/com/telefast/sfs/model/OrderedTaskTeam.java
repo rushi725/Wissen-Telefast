@@ -4,25 +4,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
-
 @Data
 @Entity
-@Table(name = "CUSTOMERS")
-public class Customer {
+public class OrderedTaskTeam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	private String firstName;
-	private String lastName;
-	private String address;
-	private String contactNo;
-
-	public Customer() {
-		// TODO Auto-generated constructor stub
-	}
-
-
+	@OneToOne
+	private Team team;
+	@OneToMany
+	private OrderedTask orderedTask;
 }

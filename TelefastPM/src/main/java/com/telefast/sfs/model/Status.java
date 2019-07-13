@@ -1,5 +1,5 @@
 package com.telefast.sfs.model;
 
 public enum Status {
-NotStarted,InProgress,Completed,Pending,Cancelled
+NOT_STARTED,IN_PROGRESS,COMPLETED,PENDING,CANCELLED
 }
