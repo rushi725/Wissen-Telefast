@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TelefastPmApplication {
+public class TelefastPMApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TelefastPmApplication.class, args);
+		SpringApplication.run(TelefastPMApplication.class, args);
 	}
 
 }
