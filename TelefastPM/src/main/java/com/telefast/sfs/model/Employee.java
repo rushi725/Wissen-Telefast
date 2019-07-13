@@ -19,7 +19,8 @@ public class Employee {
 
 	@ManyToOne
 	private Team team;
-	private String name;
+	private String firstName;
+	private String lastName;
 	@Enumerated
 	private EmpRole empRole;
 	private String empAddress;
@@ -30,12 +31,13 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(int id, Team team, String name, EmpRole empRole, String empAddress, String empContactNo,
-			boolean availableStatus) {
+	public Employee(int id, Team team, String firstName, String lastName, EmpRole empRole, String empAddress,
+			String empContactNo, boolean availableStatus) {
 		super();
 		this.id = id;
 		this.team = team;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.empRole = empRole;
 		this.empAddress = empAddress;
 		this.empContactNo = empContactNo;
