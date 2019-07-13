@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Task;
+import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.TasksRepository;
 
@@ -29,6 +31,9 @@ public class TaskController {
 	
 	@Autowired
 	private OrderedTaskRepository orderedTaskRepository;
+	
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	//-------------------------------------------------------------------
 	//Team member
 	//-------------------------------------------------------------------
@@ -36,14 +41,16 @@ public class TaskController {
 	//get task by member
 	@GetMapping(value = "/{employeeId}")
 	public ResponseEntity<?> getTask(@PathVariable String employeeId) {
-		Task  task = new Task();
-		task=tasksRepository.findById(Integer.parseInt(employeeId)).get();
-		
+				
 		OrderedTask orderedtask = new OrderedTask();
-		orderedtask=orderedTaskRepository.findById(id))(Integer.parseInt(employeeId));
+		Employee employee = new Employee();
+		employee = employeeRepository.findById(Integer.parseInt(employeeId)).get();
 		
-		ResponseEntity<Task> responseEntity = new ResponseEntity<Task>(task, HttpStatus.FOUND);
-		return responseEntity;
+		
+		orderedtask=orderedTaskRepository.findByApproved(true).get();
+//		
+//		ResponseEntity<Task> responseEntity = new ResponseEntity<Task>(task, HttpStatus.FOUND);
+//		return responseEntity;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.telefast.sfs.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "empId")
 	private int id;
 
 	@ManyToOne
