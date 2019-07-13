@@ -18,7 +18,7 @@ public class ServiceWorkflow {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int workflowId;
 	private int seqNumber;
-	private int dependentOn;
+	private Task dependentOn;
 
 	@OneToOne
 	private Task task;
@@ -31,7 +31,7 @@ public class ServiceWorkflow {
 
 	}
 
-	public ServiceWorkflow(int workflowId, int seqNumber, int dependentOn) {
+	public ServiceWorkflow(int workflowId, int seqNumber, Task dependentOn) {
 		super();
 		this.workflowId = workflowId;
 		this.seqNumber = seqNumber;

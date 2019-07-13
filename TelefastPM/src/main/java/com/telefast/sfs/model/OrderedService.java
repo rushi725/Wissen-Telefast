@@ -3,26 +3,30 @@ package com.telefast.sfs.model;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+
 @Data
 @Entity
 public class OrderedService {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int orderId;
 	private String installationAddress;
+	@Enumerated
 	private Status serviceStatus;
 	private int progress;
 	private LocalDateTime startDate;
 	private LocalDateTime deliveryDate;
 	private String serviceDenialReason;
-	
+
 	@OneToOne
 	private Service service;
 
@@ -30,8 +34,8 @@ public class OrderedService {
 	private Project project;
 
 	@ManyToOne
-	private Employee serviceManagerId;
-	
+	private Employee employee;
+
 	public OrderedService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -46,6 +50,5 @@ public class OrderedService {
 		this.deliveryDate = deliveryDate;
 		this.serviceDenialReason = serviceDenialReason;
 	}
-	
-	
+
 }

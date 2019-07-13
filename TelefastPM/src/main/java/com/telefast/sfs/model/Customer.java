@@ -18,13 +18,13 @@ public class Customer {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private int contactNo;
+	private String contactNo;
 
 	public Customer() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(int id, String firstName, String lastName, String address, int contactNo) {
+	public Customer(int id, String firstName, String lastName, String address, String contactNo) {
 		super();
 		this.id = id;
 		this.firstName = firstName;

@@ -1,6 +1,7 @@
 package com.telefast.sfs.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,8 @@ public class Employee {
 	@ManyToOne
 	private Team team;
 	private String name;
-	private String empRole;
+	@Enumerated
+	private EmpRole empRole;
 	private String empAddress;
 	private String empContactNo;
 	private boolean availableStatus;
@@ -28,7 +30,7 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(int id, Team team, String name, String empRole, String empAddress, String empContactNo,
+	public Employee(int id, Team team, String name, EmpRole empRole, String empAddress, String empContactNo,
 			boolean availableStatus) {
 		super();
 		this.id = id;
