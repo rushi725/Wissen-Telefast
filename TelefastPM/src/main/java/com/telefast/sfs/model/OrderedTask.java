@@ -29,15 +29,5 @@ public class OrderedTask {
 	@OneToMany
 	private Team team;
 
-	public OrderedTask(int orderTaskId, Status taskStatus, LocalDateTime startDate, LocalDateTime endDate,
-			String taskDenialReason, Boolean approved) {
-		super();
-		this.orderTaskId = orderTaskId;
-		this.taskStatus = taskStatus;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.taskDenialReason = taskDenialReason;
-		this.approved = approved;
-	}
 
 }

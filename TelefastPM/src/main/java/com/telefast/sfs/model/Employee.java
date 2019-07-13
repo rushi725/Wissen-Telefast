@@ -28,16 +28,5 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(int id, Team team, String name, String empRole, String empAddress, String empContactNo,
-			boolean availableStatus) {
-		super();
-		this.id = id;
-		this.team = team;
-		this.name = name;
-		this.empRole = empRole;
-		this.empAddress = empAddress;
-		this.empContactNo = empContactNo;
-		this.availableStatus = availableStatus;
-	}
 
 }

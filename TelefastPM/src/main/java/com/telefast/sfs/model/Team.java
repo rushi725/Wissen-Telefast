@@ -27,11 +27,4 @@ public class Team {
 	public Team() {
 	}
 
-	public Team(int id, String name, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-	}
-
 }

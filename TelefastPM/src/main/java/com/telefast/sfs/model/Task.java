@@ -27,17 +27,4 @@ public class Task {
 
 	}
 
-	public Task(int id, String name, String description, LocalDateTime startDate, LocalDateTime endDate,
-			Boolean approvalNeeded) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.approvalNeeded = approvalNeeded;
-	}
-
-	
-
 }

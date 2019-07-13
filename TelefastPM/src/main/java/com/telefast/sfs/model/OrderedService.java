@@ -36,16 +36,7 @@ public class OrderedService {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderedService(int orderId, String installationAddress, Status serviceStatus, int progress,
-			LocalDateTime startDate, LocalDateTime deliveryDate, String serviceDenialReason) {
-		this.orderId = orderId;
-		this.installationAddress = installationAddress;
-		this.serviceStatus = serviceStatus;
-		this.progress = progress;
-		this.startDate = startDate;
-		this.deliveryDate = deliveryDate;
-		this.serviceDenialReason = serviceDenialReason;
-	}
+	
 	
 	
 }

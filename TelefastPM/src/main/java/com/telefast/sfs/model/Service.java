@@ -21,11 +21,4 @@ public class Service {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Service(int id, String name, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-	}
-
 }

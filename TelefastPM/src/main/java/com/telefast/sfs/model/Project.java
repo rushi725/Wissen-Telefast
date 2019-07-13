@@ -34,15 +34,5 @@ public class Project {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Project(int projectId, String name, LocalDateTime startDate, LocalDateTime deliveryDate, Status status,
-			int progress) {
-		super();
-		this.projectId = projectId;
-		this.name = name;
-		this.startDate = startDate;
-		this.deliveryDate = deliveryDate;
-		this.status = status;
-		this.progress = progress;
-	}
-
+	
 }

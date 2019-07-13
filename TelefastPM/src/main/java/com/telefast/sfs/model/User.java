@@ -29,12 +29,4 @@ public class User {
 
 	}
 
-	public User(int id, String email, Boolean active, String password) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.active = active;
-		this.password = password;
-	}
-
 }

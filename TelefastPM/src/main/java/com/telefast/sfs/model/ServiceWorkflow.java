@@ -31,11 +31,4 @@ public class ServiceWorkflow {
 
 	}
 
-	public ServiceWorkflow(int workflowId, int seqNumber, int dependentOn) {
-		super();
-		this.workflowId = workflowId;
-		this.seqNumber = seqNumber;
-		this.dependentOn = dependentOn;
-	}
-
 }

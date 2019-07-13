@@ -24,13 +24,5 @@ public class Customer {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(int id, String firstName, String lastName, String address, int contactNo) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.contactNo = contactNo;
-	}
 
 }

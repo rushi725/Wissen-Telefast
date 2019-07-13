@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.telefast.sfs.model.Task;
 
 @Repository
-public interface TaksRepository extends JpaRepository<Task, Integer> {
+public interface TasksRepository extends JpaRepository<Task, Integer> {
 
 }
