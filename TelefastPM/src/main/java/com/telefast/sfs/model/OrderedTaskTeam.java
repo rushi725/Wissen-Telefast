@@ -5,26 +5,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
-
-import lombok.Data;
-@Data
 @Entity
+@Table(name="ORDEREDTASKTEAM")
 public class OrderedTaskTeam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int orderedTaskId;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "teamId")
 	private Team team;
-//	
-//	@ManyToone
-//	@JoinColumn(name = "orderedTaskId")
-//	private OrderedTask orderedTask;
+	
+	@OneToOne
+	@JoinColumn(name = "orderedTaskId")
+	private OrderedTask orderedTask;
 	
 	
 	public int getId() {

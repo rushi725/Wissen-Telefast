@@ -61,7 +61,7 @@
 			<artifactId>ojdbc</artifactId>
 			<version>6</version>
 			<scope>system</scope>
-			<systemPath>C:\Users\Nexwave\Downloads\ojdbc6.jar\ojdbc6.jar</systemPath>
+			<systemPath>C:\Users\Nexwave\Downloads\ojdbc6.jar</systemPath>
 		</dependency>
 
 	</dependencies>

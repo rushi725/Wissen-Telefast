@@ -4,31 +4,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.JoinColumn;
-
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
 
-@Data
 @Entity
-@Table(name = "WORKFLOW")
+@Table(name = "SERVICEWORKFLOW")
 public class ServiceWorkflow {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int workFlowId;
 	private int seqNumber;
-	
-	@ManyToOne
+	private int dependentOn;
+
+	@OneToOne
 	@JoinColumn(name = "taskId")
-	private Task dependentOn;
-//
-//	@OneToOne
-//	@JoinColumn(name = "taskId")
-//	private Task task;
+	private Task task;
 	
 	@ManyToOne
 	@JoinColumn(name = "teamId")
@@ -36,9 +29,6 @@ public class ServiceWorkflow {
 	
 	@ManyToOne
 	@JoinColumn(name = "serviceId")
-	private int workflowId;
-
-	@ManyToOne
 	private Service service;
 
 	public ServiceWorkflow() {
@@ -61,21 +51,21 @@ public class ServiceWorkflow {
 		this.seqNumber = seqNumber;
 	}
 
-	public Task getDependentOn() {
+	public int getDependentOn() {
 		return dependentOn;
 	}
 
-	public void setDependentOn(Task dependentOn) {
+	public void setDependentOn(int dependentOn) {
 		this.dependentOn = dependentOn;
 	}
 
-//	public Task getTask() {
-//		return task;
-//	}
-//
-//	public void setTask(Task task) {
-//		this.task = task;
-//	}
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
 
 	public Team getTeam() {
 		return team;

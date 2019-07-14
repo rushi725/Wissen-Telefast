@@ -11,11 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import lombok.Data;
 
-@Data
 @Entity
+@Table(name="ORDEREDSERVICES")
 public class OrderedService {
 
 	@Id
