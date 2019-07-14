@@ -1,3 +1,4 @@
+
 package com.telefast.sfs.model;
 
 import javax.persistence.Column;
@@ -98,7 +99,4 @@ public class Employee {
 		this.availableStatus = availableStatus;
 	}
 	
-
-
-
 }

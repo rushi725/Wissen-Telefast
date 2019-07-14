@@ -44,7 +44,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -64,7 +63,7 @@
 			<scope>system</scope>
 			<systemPath>C:\Users\Nexwave\Downloads\ojdbc6.jar\ojdbc6.jar</systemPath>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>

@@ -15,7 +15,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int customerId;
-	private String firstName;
+	String firstName;
 	private String lastName;
 	private String address;
 	private String contactNo;
@@ -23,6 +23,7 @@ public class Customer {
 	public Customer() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public int getId() {
 		return customerId;
@@ -63,7 +64,5 @@ public class Customer {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
-	
-
 
 }

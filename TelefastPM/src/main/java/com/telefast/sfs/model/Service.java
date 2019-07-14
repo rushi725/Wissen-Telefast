@@ -1,3 +1,4 @@
+
 package com.telefast.sfs.model;
 
 import javax.persistence.Entity;
@@ -47,3 +48,4 @@ public class Service {
 	
 
 }
+

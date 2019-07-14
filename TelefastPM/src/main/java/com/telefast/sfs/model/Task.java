@@ -24,6 +24,7 @@ public class Task {
 	private Boolean approvalNeeded;
 
 	public Task() {
+
 	}
 
 	public int getId() {
@@ -74,5 +75,4 @@ public class Task {
 		this.approvalNeeded = approvalNeeded;
 	}
 	
-
 }

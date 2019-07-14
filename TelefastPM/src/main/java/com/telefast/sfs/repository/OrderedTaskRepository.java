@@ -2,6 +2,10 @@ package com.telefast.sfs.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.Employee;
@@ -15,5 +19,5 @@ public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Intege
 	@Query("from ORDERED_TASK t where t.employeeId=?1")
 	OrderedTask findByEmployeeId(int parseInt);
 
-	
+
 }

@@ -8,6 +8,8 @@ import com.telefast.sfs.model.Task;
 @Repository
 public interface TasksRepository extends JpaRepository<Task, Integer> {
 
+
 	Task findByName(String string);
+
 
 }

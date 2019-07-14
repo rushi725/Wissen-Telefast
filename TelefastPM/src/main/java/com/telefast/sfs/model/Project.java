@@ -40,6 +40,7 @@ public class Project {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	public int getProjectId() {
 		return projectId;
 	}
@@ -104,6 +105,5 @@ public class Project {
 		this.projectManager = projectManager;
 	}
 
-	
 	
 }

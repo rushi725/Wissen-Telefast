@@ -9,15 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
+
+@Table(name = "ORDERTASKS")
 public class OrderedTask {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int orderedTaskId;
-	
 	@Enumerated
 	private Status taskStatus;
 	private LocalDateTime startDate;
@@ -92,7 +95,6 @@ public class OrderedTask {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
 	
 
 }
