@@ -1,14 +1,16 @@
 package com.telefast.sfs.repository;
 
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-
+	@Query("FROM EMPLOYEE EMP WHERE EMP.TEAM.TEAMID=?1")
+	List<Employee> findAllByTeamId(int teamId);
 }
