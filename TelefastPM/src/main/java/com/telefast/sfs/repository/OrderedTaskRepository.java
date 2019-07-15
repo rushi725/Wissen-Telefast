@@ -16,8 +16,6 @@ import antlr.collections.List;
 @Repository
 public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Integer> {
 
-//	@Query("from ORDERED_TASK t where t.employeeId=?1")
-//	OrderedTask findByEmployeeId(int parseInt);
 
 
 }

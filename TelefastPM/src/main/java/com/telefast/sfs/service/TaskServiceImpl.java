@@ -15,6 +15,7 @@ import com.telefast.sfs.model.Task;
 import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
+import com.telefast.sfs.repository.ServiceWorkflowRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -23,6 +24,9 @@ public class TaskServiceImpl implements TaskService{
 	OrderedTaskRepository orderedTaskRepository;
 	@Autowired
 	EmployeeRepository employeeRepository;
+	@Autowired
+	ServiceWorkflowRepository serviceWorkflowRepository;
+	
 	
 	@Transactional
 	@Override
@@ -52,5 +56,15 @@ public class TaskServiceImpl implements TaskService{
 		}
 		return "All employees of team are busy please try again";
 	}
-
+	@Transactional
+	@Override
+	public List<Integer> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
+		int taskId=task.getId();
+		int serviceId=service.getId();
+		int teamId=team.getId();
+		List<Integer> taskIds=serviceWorkflowRepository.findAllIds(taskId, serviceId, teamId);
+		return taskIds;
+	}
+	
+	
 }
