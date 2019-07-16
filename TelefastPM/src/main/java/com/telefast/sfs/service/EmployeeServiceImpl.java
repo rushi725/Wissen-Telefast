@@ -19,8 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	
 	@Transactional
 	@Override
-	public List<Employee> allAvailableEmployees(Team team) {
-		int id = team.getId();
+	public List<Employee> allAvailableEmployees(int teamId) {
+		int id = teamId;
 		return employeeRepository.findAllByTeamId(id);
 		}
 

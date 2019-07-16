@@ -1,6 +1,7 @@
 
 package com.telefast.sfs.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -18,6 +20,18 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int employeeId;
+
+	public Employee(Team team, String firstName, String lastName, EmpRole empRole, String empAddress,
+			String empContactNo, boolean availableStatus) {
+		super();
+		this.team = team;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.empRole = empRole;
+		this.empAddress = empAddress;
+		this.empContactNo = empContactNo;
+		this.availableStatus = availableStatus;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "teamId")

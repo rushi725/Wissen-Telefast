@@ -2,6 +2,7 @@ package com.telefast.sfs.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ORDERTASKS")
@@ -22,18 +24,33 @@ public class OrderedTask {
 	private Status taskStatus;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
+	public OrderedTask(Status taskStatus, LocalDateTime startDate, LocalDateTime endDate,
+			String taskDenialReason, Boolean approved, Task task, OrderedService orderedService, Employee employee) {
+		super();
+		this.taskStatus = taskStatus;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.taskDenialReason = taskDenialReason;
+		this.approved = approved;
+		this.task = task;
+		this.orderedService = orderedService;
+		this.employee = employee;
+	}
+	public OrderedTask() {
+		super();
+	}
 	private String taskDenialReason;
 	private Boolean approved;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "taskId")
 	private Task task;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "orderedServiceId")
 	private OrderedService orderedService;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "employeeId")
 	private Employee employee;
 	
@@ -91,6 +108,12 @@ public class OrderedTask {
 	}
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	@Override
+	public String toString() {
+		return "OrderedTask [orderedTaskId=" + orderedTaskId + ", taskStatus=" + taskStatus + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", taskDenialReason=" + taskDenialReason + ", approved=" + approved
+				+ ", task=" + task.getId() + ", orderedService=" + orderedService.getOrderId() + ", employee=" + employee.getId() + "]";
 	}
 	
 

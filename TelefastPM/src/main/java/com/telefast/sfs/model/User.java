@@ -1,5 +1,6 @@
 package com.telefast.sfs.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -21,12 +23,19 @@ public class User {
 	private Boolean active;
 	private String password;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "employeeId")
 	private Employee employee;
 
 	public User() {
 
+	}
+	public User( String email, Boolean active, String password, Employee employee) {
+		super();
+		this.email = email;
+		this.active = active;
+		this.password = password;
+		this.employee = employee;
 	}
 
 	public int getId() {

@@ -2,6 +2,7 @@ package com.telefast.sfs.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -32,6 +34,18 @@ public class Project {
 	@OneToOne
 	@JoinColumn(name = "employeeId")
 	private Employee projectManager;
+	
+	public Project(String name, LocalDateTime startDate, LocalDateTime deliveryDate, Status status,
+			int progress, Customer customer, Employee projectManager) {
+		super();
+		this.name = name;
+		this.startDate = startDate;
+		this.deliveryDate = deliveryDate;
+		this.status = status;
+		this.progress = progress;
+		this.customer = customer;
+		this.projectManager = projectManager;
+	}
 
 	public Project() {
 		// TODO Auto-generated constructor stub

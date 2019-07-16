@@ -1,8 +1,4 @@
 HELP.md
-<<<<<<< HEAD
-pom.xml
-=======
->>>>>>> 3e2dab64b310fdaac339838a441a9029c1ac0643
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**

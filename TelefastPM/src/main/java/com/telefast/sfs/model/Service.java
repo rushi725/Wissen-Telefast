@@ -21,6 +21,12 @@ public class Service {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Service(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
+
 	public int getId() {
 		return serviceId;
 	}
@@ -43,6 +49,11 @@ public class Service {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "Service [serviceId=" + serviceId + ", name=" + name + ", description=" + description + "]";
 	}
 	
 

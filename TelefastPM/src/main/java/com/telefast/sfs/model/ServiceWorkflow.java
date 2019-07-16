@@ -1,5 +1,7 @@
 package com.telefast.sfs.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -16,23 +19,32 @@ public class ServiceWorkflow {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int workFlowId;
+	@Column(nullable = true)
 	private int seqNumber;
-	private int dependentOn;
+	private int nextTasks;
 
-	@OneToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "taskId")
 	private Task task;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "teamId")
 	private Team team;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "serviceId")
 	private Service service;
 
 	public ServiceWorkflow() {
 
+	}
+	public ServiceWorkflow( int seqNumber, int nextTasks, Task task, Team team, Service service) {
+		super();
+		this.seqNumber = seqNumber;
+		this.nextTasks = nextTasks;
+		this.task = task;
+		this.team = team;
+		this.service = service;
 	}
 
 	public int getWorkflowId() {
@@ -51,12 +63,21 @@ public class ServiceWorkflow {
 		this.seqNumber = seqNumber;
 	}
 
-	public int getDependentOn() {
-		return dependentOn;
+
+	public int getWorkFlowId() {
+		return workFlowId;
 	}
 
-	public void setDependentOn(int dependentOn) {
-		this.dependentOn = dependentOn;
+	public void setWorkFlowId(int workFlowId) {
+		this.workFlowId = workFlowId;
+	}
+
+	public int getNextTasks() {
+		return nextTasks;
+	}
+
+	public void setNextTasks(int nextTasks) {
+		this.nextTasks = nextTasks;
 	}
 
 	public Task getTask() {

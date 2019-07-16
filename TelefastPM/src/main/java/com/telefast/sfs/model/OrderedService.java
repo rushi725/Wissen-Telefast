@@ -3,6 +3,7 @@ package com.telefast.sfs.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -21,6 +23,7 @@ public class OrderedService {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int orderedServiceId;
+
 	private String installationAddress;
 	@Enumerated
 	private Status serviceStatus;
@@ -29,25 +32,48 @@ public class OrderedService {
 	private LocalDateTime deliveryDate;
 	private String serviceDenialReason;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "serviceId")
 	private Service service;
-
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "projectId")
 	private Project project;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "employeeId")
 	private Employee employee;
 
 	public OrderedService() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public OrderedService( String installationAddress, Status serviceStatus, int progress,
+			LocalDateTime startDate, LocalDateTime deliveryDate, String serviceDenialReason, Service service,
+			Project project, Employee employee) {
+		super();
+		this.installationAddress = installationAddress;
+		this.serviceStatus = serviceStatus;
+		this.progress = progress;
+		this.startDate = startDate;
+		this.deliveryDate = deliveryDate;
+		this.serviceDenialReason = serviceDenialReason;
+		this.service = service;
+		this.project = project;
+		this.employee = employee;
+	}
 
 	public int getOrderId() {
 		return orderedServiceId;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "OrderedService [orderedServiceId=" + orderedServiceId + ", installationAddress=" + installationAddress
+//				+ ", serviceStatus=" + serviceStatus + ", progress=" + progress + ", startDate=" + startDate
+//				+ ", deliveryDate=" + deliveryDate + ", serviceDenialReason=" + serviceDenialReason + ", service="
+//				+ service.getId() + ", project=" + project.getProjectId() + ", employee=" + employee.getId() + "]";
+//	}
 
 	public void setOrderId(int orderId) {
 		this.orderedServiceId = orderId;

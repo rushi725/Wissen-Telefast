@@ -11,6 +11,7 @@ import com.telefast.sfs.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-	@Query("FROM EMPLOYEE EMP WHERE EMP.TEAM.TEAMID=?1")
+	
+	@Query("From Employee emp where emp.team.teamId=?1")
 	List<Employee> findAllByTeamId(int teamId);
 }

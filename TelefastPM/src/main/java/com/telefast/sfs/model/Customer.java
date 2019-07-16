@@ -10,10 +10,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CUSTOMERS")
 public class Customer {
+	public Customer( String firstName, String lastName, String address, String contactNo) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.contactNo = contactNo;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int customerId;
-	String firstName;
+	private String firstName;
 	private String lastName;
 	private String address;
 	private String contactNo;

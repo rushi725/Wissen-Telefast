@@ -24,8 +24,8 @@ private ProjectRepository projectRepository;
 private CustomerRepository customerRepository;
 	
 	@GetMapping(value = "/{projectManagerId}")
-	public ResponseEntity<?> getProject(){
-		return new ResponseEntity<>(projectRepository.findAll(), HttpStatus.FOUND);
+	public ResponseEntity<?> getProject(@PathVariable String projectManagerId){
+		return new ResponseEntity<>(projectRepository.findById(Integer.parseInt(projectManagerId)), HttpStatus.FOUND);
 	}
 	
 	@PostMapping

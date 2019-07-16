@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
+import com.telefast.sfs.model.ServiceWorkflow;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.model.Team;
@@ -58,11 +59,11 @@ public class TaskServiceImpl implements TaskService{
 	}
 	@Transactional
 	@Override
-	public List<Integer> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
+	public List<ServiceWorkflow> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
 		int taskId=task.getId();
 		int serviceId=service.getId();
 		int teamId=team.getId();
-		List<Integer> taskIds=serviceWorkflowRepository.findAllIds(taskId, serviceId, teamId);
+		List<ServiceWorkflow> taskIds=serviceWorkflowRepository.findChildrenIds(taskId, serviceId);
 		return taskIds;
 	}
 	

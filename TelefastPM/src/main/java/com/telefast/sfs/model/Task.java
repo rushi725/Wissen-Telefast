@@ -24,7 +24,15 @@ public class Task {
 	public Task() {
 
 	}
-
+	public Task( String name, String description, LocalDateTime startDate, LocalDateTime endDate,
+			Boolean approvalNeeded) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.approvalNeeded = approvalNeeded;
+	}
 	public int getId() {
 		return taskId;
 	}
