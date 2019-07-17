@@ -31,7 +31,7 @@ public class EmployeeController {
 		return employeeRepository.findById(Integer.parseInt(empId)).get();
 	}
 	
-	@GetMapping("/{teamId}")
+	@GetMapping("/{teamId}/employees")
 	public ResponseEntity<?> getAllEmployees(@PathVariable String teamId){
 		return new ResponseEntity<>(employeeServiceImpl.allAvailableEmployees(Integer.parseInt(teamId)), HttpStatus.FOUND);
 	}

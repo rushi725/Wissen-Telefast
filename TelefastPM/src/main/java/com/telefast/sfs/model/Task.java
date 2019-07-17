@@ -12,6 +12,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TASKS")
 public class Task {
+	@Override
+	public String toString() {
+		return "Task [taskId=" + taskId + ", name=" + name + ", description=" + description + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", approvalNeeded=" + approvalNeeded + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int taskId;

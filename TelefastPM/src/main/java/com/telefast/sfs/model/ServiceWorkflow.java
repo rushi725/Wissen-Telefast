@@ -38,6 +38,11 @@ public class ServiceWorkflow {
 	public ServiceWorkflow() {
 
 	}
+	@Override
+	public String toString() {
+		return "ServiceWorkflow [workFlowId=" + workFlowId + ", seqNumber=" + seqNumber + ", nextTasks=" + nextTasks
+				+ ", task=" + task.getId() + ", team=" + team.getId() + ", service=" + service.getId() + "]";
+	}
 	public ServiceWorkflow( int seqNumber, int nextTasks, Task task, Team team, Service service) {
 		super();
 		this.seqNumber = seqNumber;

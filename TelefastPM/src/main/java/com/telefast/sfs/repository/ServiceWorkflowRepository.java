@@ -16,4 +16,9 @@ public interface ServiceWorkflowRepository extends JpaRepository<ServiceWorkflow
 
 	//	@Query("select workFlowId FROM ServiceWorkflow SW WHERE SW.dependentOn=?1 AND SW.SERVICE.SERVICEID=?2 and SW.TEAM.TEAMID=?3")
 //	List<Integer> findAllIds(int taskId,int serviceId,int teamId);
+	
+	@Query("from ServiceWorkflow s where s.task.taskId=?1 and s.service.serviceId=?2")
+	ServiceWorkflow getByTaskAndService(int taskId, int serviceId);
+
+
 }

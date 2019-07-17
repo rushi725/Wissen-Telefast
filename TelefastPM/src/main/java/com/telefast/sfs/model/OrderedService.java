@@ -67,13 +67,13 @@ public class OrderedService {
 		return orderedServiceId;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "OrderedService [orderedServiceId=" + orderedServiceId + ", installationAddress=" + installationAddress
-//				+ ", serviceStatus=" + serviceStatus + ", progress=" + progress + ", startDate=" + startDate
-//				+ ", deliveryDate=" + deliveryDate + ", serviceDenialReason=" + serviceDenialReason + ", service="
-//				+ service.getId() + ", project=" + project.getProjectId() + ", employee=" + employee.getId() + "]";
-//	}
+	@Override
+	public String toString() {
+		return "OrderedService [orderedServiceId=" + orderedServiceId + ", installationAddress=" + installationAddress
+				+ ", serviceStatus=" + serviceStatus + ", progress=" + progress + ", startDate=" + startDate
+				+ ", deliveryDate=" + deliveryDate + ", serviceDenialReason=" + serviceDenialReason + ", service="
+				+ service.getId() + ", project=" + project.getProjectId() + ", employee=" + employee.getId() + "]";
+	}
 
 	public void setOrderId(int orderId) {
 		this.orderedServiceId = orderId;

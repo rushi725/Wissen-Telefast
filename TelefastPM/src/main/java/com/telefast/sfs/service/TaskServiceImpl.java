@@ -8,25 +8,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.telefast.sfs.model.Employee;
-import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.ServiceWorkflow;
-import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
+import com.telefast.sfs.repository.ServiceRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
+import com.telefast.sfs.repository.TasksRepository;
+import com.telefast.sfs.repository.TeamRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService{
 	
 	@Autowired
+	TasksRepository tasksRepository;
+	
+	@Autowired
 	OrderedTaskRepository orderedTaskRepository;
+	
+	@Autowired
+	TeamRepository teamRepository;
+	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	
 	@Autowired
 	ServiceWorkflowRepository serviceWorkflowRepository;
+	
+	@Autowired
+	ServiceRepository serviceRepository;
 	
 	
 	@Transactional
@@ -40,31 +52,50 @@ public class TaskServiceImpl implements TaskService{
 
 	@Transactional
 	@Override
-	public String assignTask(Task task,Team team,OrderedService orderedService) {
-		int teamId= team.getId();
-		List<Employee> employees = employeeRepository.findAllByTeamId(teamId); 
-		for (Employee employee:employees) { 
-			Boolean availStatus = employee.isAvailableStatus();
-			if(availStatus) {
-				OrderedTask orderedTask = new OrderedTask();
-				orderedTask.setTask(task);
-				orderedTask.setOrderedService(orderedService);
-				orderedTask.setEmployee(employee);
-				orderedTask.setTaskStatus(Status.NOT_STARTED);
-				orderedTaskRepository.save(orderedTask);
-				return "Task is assigned to "+employee.getFirstName()+" "+employee.getLastName();
-			}
-		}
-		return "All employees of team are busy please try again";
-	}
-	@Transactional
-	@Override
 	public List<ServiceWorkflow> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
 		int taskId=task.getId();
 		int serviceId=service.getId();
 		int teamId=team.getId();
 		List<ServiceWorkflow> taskIds=serviceWorkflowRepository.findChildrenIds(taskId, serviceId);
 		return taskIds;
+	}
+
+	@Override
+	public String assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
+		// TODO Auto-generated method stub
+		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
+		Team team = serviceWorkflow.getTeam();
+		
+		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
+		
+		List<Employee> employees = employeeRepository.findAllByTeamId(team.getId());
+		for(Employee employee:employees) {
+			System.out.println("orderedTaskId-->"+orderedTask.getOrderTaskId());
+			orderedTask.setEmployee(employee);
+			System.out.println("----->"+orderedTask);
+			orderedTaskRepository.save(orderedTask);
+			System.out.println("Task Assigned to-->"+employee.getId());
+			return "Task Assigned to-->"+employee.getId();
+		}
+		return "Not allocated";
+	}
+
+	@Override
+	public boolean assignTaskToTeam(int serviceId, int taskId, int teamId,int sequenceNo) {
+		
+		com.telefast.sfs.model.Service service = serviceRepository.findById(serviceId).get();
+		Task task = tasksRepository.findById(taskId).get();
+		Team team = teamRepository.findById(teamId).get();
+		
+		ServiceWorkflow serviceWorkflow = new ServiceWorkflow();
+		serviceWorkflow.setService(service);
+		serviceWorkflow.setTask(task);
+		serviceWorkflow.setTeam(team);
+		serviceWorkflow.setSeqNumber(sequenceNo);
+		
+		serviceWorkflowRepository.save(serviceWorkflow);
+		
+		return true;
 	}
 	
 	

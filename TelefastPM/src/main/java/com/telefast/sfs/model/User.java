@@ -15,6 +15,12 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "USERS")
 public class User {
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", email=" + email + ", active=" + active + ", password=" + password
+				+ ", employee=" + employee + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int userId;

@@ -17,6 +17,13 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "PROJECTS")
 public class Project {
+	@Override
+	public String toString() {
+		return "Project [projectId=" + projectId + ", name=" + name + ", startDate=" + startDate + ", deliveryDate="
+				+ deliveryDate + ", status=" + status + ", progress=" + progress + ", customer=" + customer.getId()
+				+ ", projectManager=" + projectManager.getId() + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int projectId;

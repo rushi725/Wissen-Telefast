@@ -17,21 +17,16 @@ import javax.persistence.Transient;
 @Table(name="EMPLOYEES")
 public class Employee {
 
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", team=" + team.getId() + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", empRole=" + empRole + ", empAddress=" + empAddress + ", empContactNo=" + empContactNo
+				+ ", availableStatus=" + availableStatus + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int employeeId;
-
-	public Employee(Team team, String firstName, String lastName, EmpRole empRole, String empAddress,
-			String empContactNo, boolean availableStatus) {
-		super();
-		this.team = team;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.empRole = empRole;
-		this.empAddress = empAddress;
-		this.empContactNo = empContactNo;
-		this.availableStatus = availableStatus;
-	}
 
 	@ManyToOne
 	@JoinColumn(name = "teamId")
@@ -46,6 +41,17 @@ public class Employee {
 
 	public Employee() {
 		// TODO Auto-generated constructor stub
+	}
+	public Employee(Team team, String firstName, String lastName, EmpRole empRole, String empAddress,
+			String empContactNo, boolean availableStatus) {
+		super();
+		this.team = team;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.empRole = empRole;
+		this.empAddress = empAddress;
+		this.empContactNo = empContactNo;
+		this.availableStatus = availableStatus;
 	}
 
 	public int getId() {

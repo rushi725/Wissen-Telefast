@@ -10,6 +10,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CUSTOMERS")
 public class Customer {
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", address=" + address + ", contactNo=" + contactNo + "]";
+	}
+
+
 	public Customer( String firstName, String lastName, String address, String contactNo) {
 		super();
 		this.firstName = firstName;

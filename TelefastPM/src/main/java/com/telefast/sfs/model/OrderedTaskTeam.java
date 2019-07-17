@@ -31,6 +31,12 @@ public class OrderedTaskTeam {
 		this.orderedTask = orderedTask;
 	}
 	
+	@Override
+	public String toString() {
+		return "OrderedTaskTeam [orderedTaskTeamId=" + orderedTaskTeamId + ", team=" + team.getId() + ", orderedTask="
+				+ orderedTask.getOrderTaskId() + "]";
+	}
+
 	public int getId() {
 		return orderedTaskTeamId;
 	}
