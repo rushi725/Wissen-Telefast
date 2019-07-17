@@ -12,7 +12,7 @@ public interface TaskService {
 
 	Boolean transferTask(int taskId, int toEmployeeID);
 
-	List<ServiceWorkflow> dependsOn(Task task, Service service, Team team);
+	List<ServiceWorkflow> dependsOn(Task task, Service service);
 
 	boolean assignTaskToTeam(int serviceId, int taskId, int teamId,int sequenceNo);
 

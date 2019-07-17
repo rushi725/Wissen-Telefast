@@ -52,10 +52,9 @@ public class TaskServiceImpl implements TaskService{
 
 	@Transactional
 	@Override
-	public List<ServiceWorkflow> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
+	public List<ServiceWorkflow> dependsOn(Task task, com.telefast.sfs.model.Service service) {
 		int taskId=task.getId();
 		int serviceId=service.getId();
-		int teamId=team.getId();
 		List<ServiceWorkflow> taskIds=serviceWorkflowRepository.findChildrenIds(taskId, serviceId);
 		return taskIds;
 	}

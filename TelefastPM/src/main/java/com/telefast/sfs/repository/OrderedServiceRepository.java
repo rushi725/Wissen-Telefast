@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.telefast.sfs.model.OrderedService;
 
 @Repository
-public interface OrederedServiceRepository extends JpaRepository<OrderedService, Integer> {
+public interface OrderedServiceRepository extends JpaRepository<OrderedService, Integer> {
 
 }
