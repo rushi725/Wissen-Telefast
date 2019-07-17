@@ -1,5 +1,8 @@
 package com.telefast.sfs.web;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,24 +22,31 @@ import com.telefast.sfs.repository.ProjectRepository;
 @RestController
 @RequestMapping("/sfs/projects")
 public class ProjectController {
+
+	@Autowired
+	private ProjectRepository projectRepository;
 	
-private ProjectRepository projectRepository;
-private CustomerRepository customerRepository;
-	
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@GetMapping
+	public List<Project> getProjects() {
+		return projectRepository.findAll();
+	}
+
 	@GetMapping(value = "/{projectManagerId}")
-	public ResponseEntity<?> getProject(@PathVariable String projectManagerId){
+	public ResponseEntity<?> getProject(@PathVariable String projectManagerId) {
 		return new ResponseEntity<>(projectRepository.findById(Integer.parseInt(projectManagerId)), HttpStatus.FOUND);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> addProject(@RequestBody Project project){
+	public ResponseEntity<?> addProject(@RequestBody Project project) {
 		return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
 	}
-	
-	@PostMapping(value = "/customer")
-	public ResponseEntity<?> addCustomer(@RequestBody Customer customer){
-		return new ResponseEntity<>(customerRepository.save(customer),HttpStatus.CREATED);
-	}
-	
+
+//	@PostMapping(value = "/customer")
+//	public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+//		return new ResponseEntity<>(customerRepository.save(customer), HttpStatus.CREATED);
+//	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedTask;
+import com.telefast.sfs.model.Team;
 
 import antlr.collections.List;
 
@@ -18,6 +19,9 @@ public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Intege
 //	
 	@Query("from OrderedTask o where o.orderedService.orderedServiceId=?1 and o.task.taskId=?2")
 	OrderedTask findOrderTaskId(int orderServiceId,int taskId);
+
+	@Query("from OrderedTask o where o.employee.employeeId=?1")
+	OrderedTask findByEmployeeId(int employeeId);
 	
 //	@Query("from OrderedTask o where o.task.taskId=?1")
 //	OrderedTask findOrderTaskId(int taskId);
