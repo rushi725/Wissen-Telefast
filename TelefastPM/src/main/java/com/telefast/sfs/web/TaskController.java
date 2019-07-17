@@ -151,8 +151,11 @@ public class TaskController {
 	@GetMapping(value = "/{teamManagerId}/tasks")
 	public ResponseEntity<?> getTasks(@PathVariable String teamManagerId){
 		
+		System.out.println("getmapping-->"+teamManagerId);
+		
 		Employee teamManager = employeeRepository.getTeamByManagerId(Integer.parseInt(teamManagerId));
-		int teamId = teamManager.getId();
+		int teamId = teamManager.getTeam().getId();
+		System.out.println("teamId-->"+teamId);
 		
 		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(teamId);
 		
