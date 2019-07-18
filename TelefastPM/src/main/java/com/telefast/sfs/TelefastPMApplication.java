@@ -11,5 +11,4 @@ public class TelefastPMApplication {
 		SpringApplication.run(TelefastPMApplication.class, args);
 
 	}
-
 }

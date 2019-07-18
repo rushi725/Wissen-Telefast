@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.Employee;
-import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
 
 @Repository
