@@ -3,9 +3,13 @@ package com.telefast.sfs.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
+import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
@@ -60,6 +65,25 @@ public class OrderedTaskController {
 
 		orderedTaskRepository.save(orderedTask);
 	}
+	//complete task by orderedTaskId
+	@PutMapping("{orderedTaskId}/complete")
+	public ResponseEntity<?> completeTask(@PathVariable String orderedTaskId){
+		OrderedTask orderedTask = orderedTaskRepository.findTaskbyTaskId(Integer.parseInt(orderedTaskId));
+		orderedTask.setTaskStatus(Status.COMPLETED);
+		orderedTaskRepository.save(orderedTask);
+		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	}
+	
+	//cancel task by orderedtaskId
+	@PutMapping("{orderedTaskId}/cancel")
+	public ResponseEntity<?> cancelTask(@RequestBody String reason, @PathVariable String orderedTaskId){
+		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
+		orderedTask.setTaskDenialReason(reason);
+		orderedTask.setTaskStatus(Status.CANCELLED);
+		orderedTaskRepository.save(orderedTask);
+		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	}
+
 
 
 }

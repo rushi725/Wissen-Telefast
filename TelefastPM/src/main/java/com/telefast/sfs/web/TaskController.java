@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,7 @@ import com.telefast.sfs.repository.ServiceRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
 import com.telefast.sfs.repository.TasksRepository;
 import com.telefast.sfs.repository.TeamRepository;
+import lombok.experimental.PackagePrivate;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -127,8 +129,6 @@ public class TaskController {
 		return new ResponseEntity<>(tasksRepository.save(task), HttpStatus.CREATED);
 	}
 
-	
-
 	// -------------------------------------------------------------------
 	// Team member
 	// -------------------------------------------------------------------
@@ -151,22 +151,22 @@ public class TaskController {
 	@GetMapping(value = "/{teamManagerId}/tasks")
 	public ResponseEntity<?> getTasks(@PathVariable String teamManagerId){
 		
-		System.out.println("getmapping-->"+teamManagerId);
 		
 		Employee teamManager = employeeRepository.getTeamByManagerId(Integer.parseInt(teamManagerId));
 		int teamId = teamManager.getTeam().getId();
-		System.out.println("teamId-->"+teamId);
 		
 		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(teamId);
 		
 		return new ResponseEntity<>(tasks, HttpStatus.CREATED);
 	}
+	
+
 
 ////	
-////	@GetMapping(value = "/{filter}")
-////	public ResponseEntity<?> getTasksByFilter(@PathVariable String filter){
-////		return new ResponseEntity<>(orderedTaskRepository.findbyStatus(filter), HttpStatus.FOUND);
-////	}
+//	@GetMapping(value = "/{filter}")
+//	public ResponseEntity<?> getTasksByFilter(@PathVariable String filter){
+//		return new ResponseEntity<>(orderedTaskRepository.findbyStatus(filter), HttpStatus.FOUND);
+//	}
 //
 
 }

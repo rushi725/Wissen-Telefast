@@ -30,6 +30,7 @@ public class CustomerController {
 	
 	@PostMapping
 	public ResponseEntity<?> addCustomer(@RequestBody Customer customer ) {
+		System.out.println("customer-->"+customer);
 		return new ResponseEntity<>(customerRepository.save(customer), HttpStatus.CREATED);
 		
 	}
