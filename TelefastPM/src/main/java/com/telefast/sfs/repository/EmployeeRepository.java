@@ -14,4 +14,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 	@Query("From Employee emp where emp.team.teamId=?1 and emp.availableStatus=true")
 	List<Employee> findAllByTeamId(int teamId);
+
+	@Query("from Employee emp where emp.employeeId=?1 and emp.empRole=com.telefast.sfs.model.EmpRole.TEAM_MANAGER")
+	Employee getTeamByManagerId(int managerId);
 }

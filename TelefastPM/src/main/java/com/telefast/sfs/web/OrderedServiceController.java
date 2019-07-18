@@ -1,9 +1,15 @@
 package com.telefast.sfs.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +18,7 @@ import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
+import com.telefast.sfs.model.Status;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.ProjectRepository;
@@ -34,11 +41,26 @@ public class OrderedServiceController {
 	@Autowired
 	private ServiceRepository serviceRepository; 
 	
-	@PostMapping("/cancelService/{serviceId}")
-	public void cancelService(@RequestBody String reason,@PathVariable int serviceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(serviceId).get();
+	@PutMapping("/{orderedServiceId}/cancel")
+	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable String orderedServiceId) {
+		OrderedService orderedService = orderedServiceRepository.findById(Integer.parseInt(orderedServiceId)).get();
 		orderedService.setServiceDenialReason(reason);
+		orderedService.setServiceStatus(Status.CANCELLED);
 		orderedServiceRepository.save(orderedService);
+		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping("/{orderedServiceId}/complete")
+	public ResponseEntity<?> completeService(@PathVariable String orderedServiceId){
+		OrderedService orderedService = orderedServiceRepository.findById(Integer.parseInt(orderedServiceId)).get();
+		orderedService.setServiceStatus(Status.CANCELLED);
+		orderedServiceRepository.save(orderedService);
+		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping
+	public List<OrderedService> getOrderedServices(){
+		return orderedServiceRepository.findAll();
 	}
 	
 	@PostMapping

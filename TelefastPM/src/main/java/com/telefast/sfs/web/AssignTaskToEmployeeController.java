@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,12 +31,5 @@ public class AssignTaskToEmployeeController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 		
 	}
-	
-	//Assign task to team
-//	@PostMapping("/team/{serviceId}/{taskId}/{teamId}/{sequenceNo}")
-//	public ResponseEntity<?> assignTask(){
-//		
-//	}
-
 
 }

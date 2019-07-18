@@ -1,5 +1,7 @@
 package com.telefast.sfs.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,11 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeServiceImpl employeeServiceImpl;
+	
+	@GetMapping
+	public List<Employee> getEmployees(){
+		return employeeRepository.findAll();
+	}
 	
 	@GetMapping("/{empId}")
 	public Employee getEmployee(@PathVariable String empId) {
