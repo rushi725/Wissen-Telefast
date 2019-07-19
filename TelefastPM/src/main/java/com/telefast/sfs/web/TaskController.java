@@ -156,7 +156,7 @@ public class TaskController {
 		int teamId = teamManager.getTeam().getId();
 		
 		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(teamId);
-		
+				
 		return new ResponseEntity<>(tasks, HttpStatus.CREATED);
 	}
 	

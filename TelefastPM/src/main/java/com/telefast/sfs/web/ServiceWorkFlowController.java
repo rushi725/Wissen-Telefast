@@ -41,7 +41,7 @@ public class ServiceWorkFlowController {
 		return serviceWorkFlowRepository.findAll();
 	}
 	
-	@PostMapping("/service_work_flow")
+	@PostMapping
 	public void add(@RequestBody ServiceWorkflow serviceWorkFlow) {
 		Service service = new Service();
 		Task task = new Task();
