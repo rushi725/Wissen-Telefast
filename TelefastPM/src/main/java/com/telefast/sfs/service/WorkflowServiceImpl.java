@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.ServiceWorkflow;
-import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
 
 @Repository

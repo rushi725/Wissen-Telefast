@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.telefast.sfs.model.Customer;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.repository.CustomerRepository;
@@ -28,8 +27,13 @@ public class ProjectController {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+
+
+
+
 	@Autowired
 	private CustomerRepository customerRepository;
+
 	
 	@Autowired
 	private OrderedServiceRepository orderedServiceRepository;

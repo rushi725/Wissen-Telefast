@@ -1,7 +1,6 @@
 package com.telefast.sfs.web;
 
 import java.time.LocalDateTime;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +20,8 @@ import com.telefast.sfs.model.EmpRole;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
-import com.telefast.sfs.model.OrderedTaskTeam;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
-import com.telefast.sfs.model.ServiceWorkflow;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.model.Team;
@@ -39,7 +35,6 @@ import com.telefast.sfs.repository.ServiceRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
 import com.telefast.sfs.repository.TasksRepository;
 import com.telefast.sfs.repository.TeamRepository;
-import lombok.experimental.PackagePrivate;
 
 @CrossOrigin(origins = "*")
 @RestController

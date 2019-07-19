@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.OrderedTask;
-import com.telefast.sfs.model.Task;
 
 @Repository
 public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Integer> {

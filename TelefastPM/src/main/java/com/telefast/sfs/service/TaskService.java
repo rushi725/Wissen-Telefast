@@ -2,7 +2,6 @@ package com.telefast.sfs.service;
 
 import java.util.List;
 
-import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.ServiceWorkflow;
