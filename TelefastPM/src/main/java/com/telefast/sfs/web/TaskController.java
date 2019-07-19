@@ -81,31 +81,31 @@ public class TaskController {
 		Service service = new Service("service1", "description1");
 		serviceRepository.save(service);
 //
-		Task task = new Task("task2", "description2", LocalDateTime.now(), LocalDateTime.now(), true);
-		tasksRepository.save(task);
+//		Task task = new Task("task2", "description2", LocalDateTime.now(), LocalDateTime.now(), true);
+//		tasksRepository.save(task);
 //
-//		Team team = new Team("name", "description");
-//		teamRepository.save(team);
+		Team team = new Team("name", "description");
+		teamRepository.save(team);
 
-		Team team2 = new Team();
-		team2 = teamRepository.findById(4).get();
-//		
+//		Team team2 = new Team();
+//		team2 = teamRepository.findById(4).get();
+////		
 //
-		Employee employee = new Employee(team2, "firstName2", "lastName2", EmpRole.TEAM_MEMBER, "empAddress2",
+		Employee employee = new Employee(team, "firstName1", "lastName1", EmpRole.ROLE_SUPER, "empAddress1",
 				"1234567891", false);
 		employeeRepository.save(employee);
 
-		Project project = new Project("name", LocalDateTime.now(), LocalDateTime.now(), Status.IN_PROGRESS, 50,
-				customer, employee);
-		projectRepository.save(project);
-//
-		OrderedService orderedService = new OrderedService("installationAddress", Status.IN_PROGRESS, 40,
-				LocalDateTime.now(), LocalDateTime.now(), "serviceDenialReason", service, project, employee);
-		orderedServiceRepository.save(orderedService);
-//
-		OrderedTask orderedTask = new OrderedTask(Status.NOT_STARTED, LocalDateTime.now(), LocalDateTime.now(),
-				"taskDenialReason", false, task, orderedService, null);
-		orderedTaskRepository.save(orderedTask);
+//		Project project = new Project("name", LocalDateTime.now(), LocalDateTime.now(), Status.IN_PROGRESS, 50,
+//				customer, employee);
+//		projectRepository.save(project);
+////
+//		OrderedService orderedService = new OrderedService("installationAddress", Status.IN_PROGRESS, 40,
+//				LocalDateTime.now(), LocalDateTime.now(), "serviceDenialReason", service, project, employee);
+//		orderedServiceRepository.save(orderedService);
+////
+//		OrderedTask orderedTask = new OrderedTask(Status.NOT_STARTED, LocalDateTime.now(), LocalDateTime.now(),
+//				"taskDenialReason", false, task, orderedService, null);
+//		orderedTaskRepository.save(orderedTask);
 //
 //		ServiceWorkflow serviceWorkflow = new ServiceWorkflow( 1, 2, task, team, service);
 //		serviceWorkFlowRepository.save(serviceWorkflow);
