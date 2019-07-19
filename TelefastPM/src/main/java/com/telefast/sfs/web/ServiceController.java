@@ -57,7 +57,7 @@ private RestTemplate restTemplate= new RestTemplate();
 	
 	@GetMapping
 	public ResponseEntity<?> getServices(){
-		return new ResponseEntity<>(serviceRepository.findAll(), HttpStatus.FOUND);
+		return new ResponseEntity<>(serviceRepository.findAll(), HttpStatus.ACCEPTED);
 	}
 	
 	//get all tasks by serviceId

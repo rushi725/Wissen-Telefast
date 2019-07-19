@@ -3,6 +3,8 @@ package com.telefast.sfs.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,8 +43,8 @@ public class ServiceWorkFlowController {
 		return serviceWorkFlowRepository.findAll();
 	}
 	
-	@PostMapping("/service_work_flow")
-	public void add(@RequestBody ServiceWorkflow serviceWorkFlow) {
+	@PostMapping
+	public ResponseEntity<?> add(@RequestBody ServiceWorkflow serviceWorkFlow) {
 		Service service = new Service();
 		Task task = new Task();
 		Team team = new Team();
@@ -55,7 +57,7 @@ public class ServiceWorkFlowController {
 		serviceWorkFlow.setTask(task);
 		serviceWorkFlow.setTeam(team);
 
-		serviceWorkFlowRepository.save(serviceWorkFlow);
+		return new ResponseEntity<>(serviceWorkFlowRepository.save(serviceWorkFlow), HttpStatus.CREATED);
 	}
 
 }

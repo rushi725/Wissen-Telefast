@@ -72,9 +72,11 @@
 		</dependency>-->
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>oracle</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>6</version>
+			<scope>system</scope>
+			<systemPath>C:\Users\rusha\Downloads\ojdbc6.jar\ojdbc6.jar</systemPath>
 		</dependency>
 
 	</dependencies>
