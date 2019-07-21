@@ -21,6 +21,7 @@ public interface TaskService {
 	
 	OrderedTaskRequest getAllInfoForEmployeeId(int employeeId);
 	
-	List<OrderedTask> getOrderedTaskAssignedByTeamManager(int teamManagerId);
+	List<OrderedTask> getOrderedTaskAssignedToTeamManager(int teamManagerId);
+
 
 }

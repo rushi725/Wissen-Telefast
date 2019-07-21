@@ -63,6 +63,25 @@ public class OrderedServiceController {
 		return orderedServiceRepository.findAll();
 	}
 	
+	//get orderedServices by serviceManagerId
+	@GetMapping("/serviceManager/{serviceManagerId}")
+	public ResponseEntity<?> getOrderedServicesByServiceManager(@PathVariable int serviceManagerId){
+		List<OrderedService> list = orderedServiceRepository.findAllOrderedServicesByServiceManagerId(serviceManagerId);
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+	}
+	
+	//get orderedServices by projectManagerId
+	@GetMapping("/projectManager/{projectManagerId}")
+	public ResponseEntity<?> getOrderedServicesByProjectManagerId(@PathVariable int projectManagerId){
+		
+		//get all projects assigned to projectManager
+		List<Integer> projectIds = projectRepository.findProjectIdsByProjectManagerId(projectManagerId);
+		
+		//get orderedServices by projectIds
+		List<OrderedService> list = orderedServiceRepository.findAllOrderedServicesByProjectIds(projectIds);
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+	}
+
 	@PostMapping
 	public void addService(@RequestBody OrderedService orderedService) {
 		Service service = new Service();

@@ -38,15 +38,21 @@ public class EmployeeController {
 		return employeeRepository.findById(Integer.parseInt(empId)).get();
 	}
 	
+	
+	//get all available employees from teamId
 	@GetMapping("/{teamId}/employees")
 	public ResponseEntity<?> getAllEmployees(@PathVariable String teamId){
-		return new ResponseEntity<>(employeeServiceImpl.allAvailableEmployees(Integer.parseInt(teamId)), HttpStatus.FOUND);
+		List<Employee> list = employeeRepository.findAllByTeamId(Integer.parseInt(teamId));
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
+	
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
-		
+
+
 	}
 
 }

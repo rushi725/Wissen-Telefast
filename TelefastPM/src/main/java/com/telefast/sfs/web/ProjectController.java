@@ -26,10 +26,6 @@ public class ProjectController {
 
 	@Autowired
 	private ProjectRepository projectRepository;
-	
-
-
-
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -42,6 +38,7 @@ public class ProjectController {
 	public List<Project> getProjects() {
 		return projectRepository.findAll();
 	}
+
 
 	//get services by projectId
 	@GetMapping(value = "/{projectId}/services")
@@ -60,6 +57,7 @@ public class ProjectController {
 
 	@PostMapping
 	public ResponseEntity<?> addProject(@RequestBody Project project) {
+
 		return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
 	}
 

@@ -12,6 +12,17 @@ import com.telefast.sfs.model.Service;
 @Repository
 public interface OrderedServiceRepository extends JpaRepository<OrderedService, Integer> {
 
+	@Query("from OrderedService o where o.employee.employeeId=?1")
+	List<OrderedService> findAllOrderedServicesByServiceManagerId(int serviceManagerId);
+	
+	@Query("from OrderedService o where o.project.projectId IN :projectIds")
+	List<OrderedService> findAllOrderedServicesByProjectIds(List<Integer> projectIds);
+	
+	
+//	List<OrderedService> findAllOrderedServicesByProjectManagerId(int projectManagerId);
+//
+//	@Query("select o.service from OrderedService o where o.project.projectId=?1")
+//	List<Service> findServicesByProjectId(int projectId);
 	@Query("select o.service from OrderedService o where o.employee.employeeId=?1")
 	List<Service> findAllByManagerId(int managerId);
 

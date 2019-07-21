@@ -6,5 +6,6 @@ import com.telefast.sfs.model.Employee;
 
 public interface EmployeeService {
 	
+
 	List<Employee> allAvailableEmployees(int teamId);
 }

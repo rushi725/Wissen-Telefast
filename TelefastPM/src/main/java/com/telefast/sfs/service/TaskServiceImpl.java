@@ -85,11 +85,10 @@ public class TaskServiceImpl implements TaskService{
 		
 		List<Employee> employees = employeeRepository.findAllByTeamId(team.getId());
 		for(Employee employee:employees) {
-			System.out.println("orderedTaskId-->"+orderedTask.getOrderTaskId());
+
 			orderedTask.setEmployee(employee);
-			System.out.println("----->"+orderedTask);
+			employee.setAvailableStatus(false);
 			orderedTaskRepository.save(orderedTask);
-			System.out.println("Task Assigned to-->"+employee.getId());
 			return "Task Assigned to-->"+employee.getId();
 		}
 		return "Not allocated";
@@ -140,7 +139,7 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public List<OrderedTask> getOrderedTaskAssignedByTeamManager(int teamManagerId) {
+	public List<OrderedTask> getOrderedTaskAssignedToTeamManager(int teamManagerId) {
 		Employee teamManager = employeeRepository.getTeamByManagerId(teamManagerId);
 		int teamId = teamManager.getTeam().getId();
 		System.out.println("get teamManagerId");

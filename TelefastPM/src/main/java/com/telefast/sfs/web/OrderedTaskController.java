@@ -87,6 +87,13 @@ public class OrderedTaskController {
 	@PutMapping("/{orderedTaskId}/changeStatus/{statusId}")
 	public ResponseEntity<?> changeStatus(@PathVariable String orderedTaskId, @PathVariable int statusId){
 		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
+		
+		if(Status.values() [statusId]==Status.COMPLETED && orderedTask.getTask().getApprovalNeeded()==true) {
+			orderedTask.setTaskStatus(Status.SENT_FOR_APPROVAL);
+		}
+		else {
+			orderedTask.setTaskStatus(Status.values()[statusId]);
+		}
 		orderedTask.setTaskStatus(Status.values()[statusId]);
 		orderedTaskRepository.save(orderedTask);
 		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
@@ -96,11 +103,22 @@ public class OrderedTaskController {
 	@PutMapping("/{orderedTaskId}/complete")
 	public ResponseEntity<?> completeTask(@PathVariable String orderedTaskId) {
 		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
+		orderedTask.setTaskStatus(Status.COMPLETED);
+
 		orderedTask.setApproved(true);
 		orderedTaskRepository.save(orderedTask);
 		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
 	}
 	
+	// Reject task by orderedTaskId
+	@PutMapping("/{orderedTaskId}/reject")
+	public ResponseEntity<?> rejectTask(@PathVariable String orderedTaskId){
+		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
+		orderedTask.setTaskStatus(Status.NOT_STARTED);
+		orderedTask.setApproved(false);
+		orderedTaskRepository.save(orderedTask);
+		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	}
 	
 
 	// cancel task by orderedtaskId
@@ -127,7 +145,7 @@ public class OrderedTaskController {
 	@GetMapping(value = "/teamManager/{teamManagerId}")
 	public ResponseEntity<?> getTasksByTeamManager(@PathVariable String teamManagerId) {
 
-		List<OrderedTask> orderedTaskList = taskService.getOrderedTaskAssignedByTeamManager(Integer.parseInt(teamManagerId));
+		List<OrderedTask> orderedTaskList = taskService.getOrderedTaskAssignedToTeamManager(Integer.parseInt(teamManagerId));
 		return new ResponseEntity<>(orderedTaskList, HttpStatus.CREATED);
 	}
 

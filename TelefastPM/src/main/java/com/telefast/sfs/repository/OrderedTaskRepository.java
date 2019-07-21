@@ -27,6 +27,5 @@ public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Intege
 //	@Query("from OrderedTask o where o.task.taskId=?1")
 //	OrderedTask findOrderTaskId(int taskId);
 	
-	//
 
 }

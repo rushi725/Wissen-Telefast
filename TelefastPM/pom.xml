@@ -71,10 +71,24 @@
 			<version>0.9.1</version>
 		</dependency>
  
+			<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.4.3.Final</version>
+		</dependency>
+		
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.1.8.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>6</version>
+			<scope>system</scope>
+			<systemPath>C:\Users\shant\Desktop\Oracle_Training\ojdbc6.jar</systemPath>
 		</dependency>
 
 	</dependencies>

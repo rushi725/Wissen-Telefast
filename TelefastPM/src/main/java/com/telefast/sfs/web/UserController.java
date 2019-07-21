@@ -24,8 +24,20 @@ import com.telefast.sfs.repository.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepository;
+	
 	@Autowired
 	private EmployeeRepository employeeRepo;
+
+//	@PostMapping
+//	public ResponseEntity<?> addUser(@RequestBody User user) {
+//		return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
+//	}
+	@DeleteMapping("delete/{userId}")
+	public void deleteUser(@PathVariable int userId){
+		userRepository.deleteById(userId);
+	}
+
+
 	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@RequestBody User user) {
 		Employee employee = employeeRepo.findById(user.getEmployee().getId()).get();
@@ -34,10 +46,6 @@ public class UserController {
 		return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("delete/{userId}")
-	public void deleteUser(@PathVariable int userId) {
-		userRepository.deleteById(userId);
-	}
 
 	@GetMapping("{userName}/getUserRole")
 	public ResponseEntity<?> getUserRole(@PathVariable String userName) {
