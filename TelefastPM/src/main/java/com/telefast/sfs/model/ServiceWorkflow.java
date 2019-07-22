@@ -19,6 +19,7 @@ public class ServiceWorkflow {
 	private int workFlowId;
 	@Column(nullable = true)
 	private int seqNumber;
+	
 	private int nextTasks;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -75,12 +76,12 @@ public class ServiceWorkflow {
 		this.workFlowId = workFlowId;
 	}
 
-	public int getNextTasks() {
+	public int getPrevTask() {
 		return nextTasks;
 	}
 
-	public void setNextTasks(int nextTasks) {
-		this.nextTasks = nextTasks;
+	public void setPrevTasks(int prevTask) {
+		this.nextTasks = prevTask;
 	}
 
 	public Task getTask() {

@@ -53,27 +53,17 @@ public class TaskServiceImpl implements TaskService{
 	ProjectRepository projectRepository;
 	
 	@Autowired
-	ServiceWorkflowRepository serviceWorkFlowRepository;
-	
-	
-	@Transactional
-	@Override
-	public Boolean transferTask(int taskId, int toEmployeeID) {
-		OrderedTask orderedTask = orderedTaskRepository.findById(taskId).get();
-		Employee emp =employeeRepository.findById(toEmployeeID).get(); 
-		orderedTask.setEmployee(emp);
-		return true;
-	}
+	ServiceWorkflowRepository serviceWorkFlowRepository;	
 
-	@Transactional
-	@Override
-	public List<ServiceWorkflow> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
-		int taskId=task.getId();
-		int serviceId=service.getId();
-		int teamId=team.getId();
-		List<ServiceWorkflow> taskIds=serviceWorkflowRepository.findChildrenIds(taskId, serviceId);
-		return taskIds;
-	}
+//	@Transactional
+//	@Override
+//	public List<ServiceWorkflow> dependsOn(Task task, com.telefast.sfs.model.Service service, Team team) {
+//		int taskId=task.getId();
+//		int serviceId=service.getId();
+//		int teamId=team.getId();
+//		List<ServiceWorkflow> taskIds=serviceWorkflowRepository.findChildrenIds(taskId, serviceId);
+//		return taskIds;
+//	}
 
 	@Override
 	public String assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
@@ -113,47 +103,11 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public OrderedTaskRequest getAllInfoForEmployeeId(int employeeId) {
-
-		OrderedTask orderedTask = orderedTaskRepository.findByEmployeeId(employeeId);
-		System.out.println(orderedTask.getTask().getId());
-
-		OrderedService orderedService = orderedServiceRepository.findById(orderedTask.getOrderedService().getOrderId()).get();
-		System.out.println(orderedService.getService().getId());
-		
-		Project project = projectRepository.findById(orderedService.getProject().getProjectId()).get();
-		System.out.println(project.getProjectId());
-		
-		Employee employee = employeeRepository.findById(employeeId).get();
-		int teamId = employee.getTeam().getId();
-		
-		Employee manager = employeeRepository.getTeamManagerByTeamId(teamId);
-		
-		OrderedTaskRequest orderedTaskRequest = new OrderedTaskRequest();
-		orderedTaskRequest.setOrderedService(orderedService);
-		orderedTaskRequest.setOrderedTask(orderedTask);
-		orderedTaskRequest.setProject(project);
-		orderedTaskRequest.setEmployee(manager);
-		
-		return orderedTaskRequest;
-	}
-
-	@Override
-	public List<OrderedTask> getOrderedTaskAssignedToTeamManager(int teamManagerId) {
-		Employee teamManager = employeeRepository.getTeamByManagerId(teamManagerId);
-		int teamId = teamManager.getTeam().getId();
-		System.out.println("get teamManagerId");
-		System.out.println(teamId);
-
-		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(teamId);
-		System.out.println("printing taskIds");
-
-		List<Integer> taskIds = new ArrayList<Integer>();
-		tasks.forEach(e -> taskIds.add(e.getId()));
-
-		List<OrderedTask> orderedTaskList = orderedTaskRepository.findAllOrderedTaskByTaskId(taskIds);
-		return orderedTaskList;
-	}
-	
+	public Task getTaskByEmployee(int employeeId) {
+		OrderedTask orderedtask = orderedTaskRepository.findByEmployeeId(employeeId);
+		int taskId = orderedtask.getTask().getId();
+		Task task = tasksRepository.findById(taskId).get();
+		return task;
+	}		
 	
 }

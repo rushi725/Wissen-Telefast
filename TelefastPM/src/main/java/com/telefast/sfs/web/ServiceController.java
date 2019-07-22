@@ -67,19 +67,9 @@ private RestTemplate restTemplate= new RestTemplate();
 		return new ResponseEntity<>(tasks, HttpStatus.ACCEPTED);
 	}
 	
-//	//get all orderedServices assigned to service manager
-//	@GetMapping(value = "/{serviceManagerId}")
-//	public ResponseEntity<?> getServiceByManager(@PathVariable String serviceManagerId) {
-//		
-//		List<Service> services = orderedServiceRepository.findAllByManagerId(Integer.parseInt(serviceManagerId));
-//		return new ResponseEntity<>(services, HttpStatus.ACCEPTED);
-//	}
-	
-	
 	//get all services assigned to service manager
 	@GetMapping(value = "/{serviceManagerId}")
 	public ResponseEntity<?> getServiceByManager(@PathVariable String serviceManagerId) {
-		
 		List<Service> services = orderedServiceRepository.findAllByManagerId(Integer.parseInt(serviceManagerId));
 		return new ResponseEntity<>(services, HttpStatus.ACCEPTED);
 	}

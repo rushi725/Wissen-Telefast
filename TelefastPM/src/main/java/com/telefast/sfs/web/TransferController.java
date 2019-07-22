@@ -13,12 +13,16 @@ import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.TasksRepository;
+import com.telefast.sfs.service.OrderedTaskService;
 import com.telefast.sfs.service.TaskService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("sfs/transferTask")
 public class TransferController {
+	
+	@Autowired
+	private OrderedTaskService orderedTaskService;
 
 	@Autowired
 	OrderedTaskRepository orderedTaskRepository;
@@ -33,7 +37,7 @@ public class TransferController {
 	public ResponseEntity<?> tranferTask(@RequestBody Task task, @RequestBody Employee employee) {
 		int empId = employee.getId();
 		int taskId = task.getId();
-		boolean b = taskService.transferTask(taskId, empId);
+		boolean b = orderedTaskService.transferTask(taskId, empId);
 		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 

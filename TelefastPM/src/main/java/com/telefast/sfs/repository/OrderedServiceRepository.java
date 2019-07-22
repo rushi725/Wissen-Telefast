@@ -29,4 +29,7 @@ public interface OrderedServiceRepository extends JpaRepository<OrderedService, 
 	@Query("select o.service from OrderedService o where o.project.projectId=?1")
 	List<Service> findServicesByProjectId(int projectId);
 
+	@Query("from OrderedService o where o.service.serviceId=?1")
+	OrderedService findByServiceId(int serviceId);
+
 }

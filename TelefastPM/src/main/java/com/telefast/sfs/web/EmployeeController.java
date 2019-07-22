@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.repository.EmployeeRepository;
+import com.telefast.sfs.service.EmployeeService;
 import com.telefast.sfs.service.EmployeeServiceImpl;
 
 @CrossOrigin(origins = "*")
@@ -26,8 +27,7 @@ public class EmployeeController {
 	EmployeeRepository employeeRepository;
 	
 	@Autowired
-	EmployeeServiceImpl employeeServiceImpl;
-	
+	private EmployeeService employeeService;
 	@GetMapping
 	public List<Employee> getEmployees(){
 		return employeeRepository.findAll();
@@ -41,8 +41,8 @@ public class EmployeeController {
 	
 	//get all available employees from teamId
 	@GetMapping("/{teamId}/employees")
-	public ResponseEntity<?> getAllEmployees(@PathVariable String teamId){
-		List<Employee> list = employeeRepository.findAllByTeamId(Integer.parseInt(teamId));
+	public ResponseEntity<?> getAllEmployees(@PathVariable int teamId){
+		List<Employee> list = employeeService.allAvailableEmployees(teamId);
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 
 	}

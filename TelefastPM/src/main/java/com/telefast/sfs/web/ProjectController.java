@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.telefast.sfs.model.Customer;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.repository.CustomerRepository;
@@ -57,7 +58,9 @@ public class ProjectController {
 
 	@PostMapping
 	public ResponseEntity<?> addProject(@RequestBody Project project) {
-
+		Customer customer = new Customer();
+		customer = customerRepository.findById(project.getCustomer().getId()).get();
+		project.setCustomer(customer);
 		return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
 	}
 

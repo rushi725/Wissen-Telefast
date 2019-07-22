@@ -14,20 +14,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
-import com.telefast.sfs.model.Project;
-import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.ProjectRepository;
 import com.telefast.sfs.repository.ServiceRepository;
+import com.telefast.sfs.service.OrderedServiceService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/sfs/orderedServices")
 public class OrderedServiceController {
+	
+	@Autowired
+	private OrderedServiceService orderedServiceService;
 	
 	@Autowired
 	private OrderedServiceRepository orderedServiceRepository;
@@ -42,20 +43,17 @@ public class OrderedServiceController {
 	private ServiceRepository serviceRepository; 
 	
 	@PutMapping("/{orderedServiceId}/cancel")
-	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable String orderedServiceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(Integer.parseInt(orderedServiceId)).get();
-		orderedService.setServiceDenialReason(reason);
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedServiceRepository.save(orderedService);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable int orderedServiceId) {
+
+		boolean b = orderedServiceService.cancelOrderedService(reason, orderedServiceId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 	
 	@PutMapping("/{orderedServiceId}/complete")
-	public ResponseEntity<?> completeService(@PathVariable String orderedServiceId){
-		OrderedService orderedService = orderedServiceRepository.findById(Integer.parseInt(orderedServiceId)).get();
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedServiceRepository.save(orderedService);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> completeService(@PathVariable int orderedServiceId){
+	
+		boolean b = orderedServiceService.completeService(orderedServiceId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping
@@ -66,36 +64,20 @@ public class OrderedServiceController {
 	//get orderedServices by serviceManagerId
 	@GetMapping("/serviceManager/{serviceManagerId}")
 	public ResponseEntity<?> getOrderedServicesByServiceManager(@PathVariable int serviceManagerId){
-		List<OrderedService> list = orderedServiceRepository.findAllOrderedServicesByServiceManagerId(serviceManagerId);
+		List<OrderedService> list = orderedServiceService.findAllOrderedServicesByServiceManagerId(serviceManagerId);
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 	
 	//get orderedServices by projectManagerId
 	@GetMapping("/projectManager/{projectManagerId}")
 	public ResponseEntity<?> getOrderedServicesByProjectManagerId(@PathVariable int projectManagerId){
-		
-		//get all projects assigned to projectManager
-		List<Integer> projectIds = projectRepository.findProjectIdsByProjectManagerId(projectManagerId);
-		
-		//get orderedServices by projectIds
-		List<OrderedService> list = orderedServiceRepository.findAllOrderedServicesByProjectIds(projectIds);
+		List<OrderedService> list = orderedServiceService.findAllOrderedServiceByProjectManagerId(projectManagerId);
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 
 	@PostMapping
-	public void addService(@RequestBody OrderedService orderedService) {
-		Service service = new Service();
-		Project project = new Project();
-		Employee serviceManager = new Employee();
-
-		service = serviceRepository.findById(orderedService.getService().getId()).get();
-		project = projectRepository.findById(orderedService.getProject().getProjectId()).get();
-		serviceManager = employeeRepository.findById(orderedService.getEmployee().getId()).get();
-
-		orderedService.setService(service);
-		orderedService.setProject(project);
-		orderedService.setEmployee(serviceManager);
-
-		orderedServiceRepository.save(orderedService);
+	public ResponseEntity<?> addService(@RequestBody OrderedService orderedService) {
+		boolean b = orderedServiceService.addService(orderedService);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 }
