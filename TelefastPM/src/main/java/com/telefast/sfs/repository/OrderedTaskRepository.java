@@ -31,4 +31,5 @@ public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Intege
 	
 	List<OrderedTask> findByOrderedService(OrderedService orderedService);
 
+
 }

@@ -70,7 +70,6 @@ private RestTemplate restTemplate= new RestTemplate();
 	//get all services assigned to service manager
 	@GetMapping(value = "/{serviceManagerId}")
 	public ResponseEntity<?> getServiceByManager(@PathVariable String serviceManagerId) {
-		
 		List<Service> services = orderedServiceRepository.findAllByManagerId(Integer.parseInt(serviceManagerId));
 		return new ResponseEntity<>(services, HttpStatus.ACCEPTED);
 	}

@@ -27,11 +27,16 @@ import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.ProjectRepository;
 import com.telefast.sfs.repository.ServiceRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
+import com.telefast.sfs.service.OrderedServiceService;
+
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/sfs/orderedServices")
 public class OrderedServiceController {
+	
+	@Autowired
+	private OrderedServiceService orderedServiceService;
 	
 	@Autowired
 	private OrderedServiceRepository orderedServiceRepository;
@@ -52,27 +57,24 @@ public class OrderedServiceController {
 	private OrderedTaskRepository orderedTaskRepository;
 	
 	@PutMapping("/{orderedServiceId}/cancel")
-	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable String orderedServiceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(Integer.parseInt(orderedServiceId)).get();
-		orderedService.setServiceDenialReason(reason);
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedServiceRepository.save(orderedService);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable int orderedServiceId) {
+
+		boolean b = orderedServiceService.cancelOrderedService(reason, orderedServiceId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 	
 	@PutMapping("/{orderedServiceId}/complete")
-	public ResponseEntity<?> completeService(@PathVariable String orderedServiceId){
-		OrderedService orderedService = orderedServiceRepository.findById(Integer.parseInt(orderedServiceId)).get();
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedServiceRepository.save(orderedService);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> completeService(@PathVariable int orderedServiceId){
+	
+		boolean b = orderedServiceService.completeService(orderedServiceId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping
 	public List<OrderedService> getOrderedServices(){
 		return orderedServiceRepository.findAll();
 	}
-	
+
 	@PostMapping
 	public void addService(@RequestBody OrderedService orderedService) {
 		Service service = new Service();
@@ -98,4 +100,24 @@ public class OrderedServiceController {
 			orderedTaskRepository.save(orderedTask);
 		}
 	}
+	//get orderedServices by serviceManagerId
+	@GetMapping("/serviceManager/{serviceManagerId}")
+	public ResponseEntity<?> getOrderedServicesByServiceManager(@PathVariable int serviceManagerId){
+		List<OrderedService> list = orderedServiceService.findAllOrderedServicesByServiceManagerId(serviceManagerId);
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+	}
+	
+	//get orderedServices by projectManagerId
+	@GetMapping("/projectManager/{projectManagerId}")
+	public ResponseEntity<?> getOrderedServicesByProjectManagerId(@PathVariable int projectManagerId){
+		List<OrderedService> list = orderedServiceService.findAllOrderedServiceByProjectManagerId(projectManagerId);
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+	}
+
+//	@PostMapping
+//	public ResponseEntity<?> addService(@RequestBody OrderedService orderedService) {
+//		boolean b = orderedServiceService.addService(orderedService);
+//		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
+//>>>>>>> ea009a8bf9913eddf6a424217a0a3eac4b28ebd1
+//	}
 }

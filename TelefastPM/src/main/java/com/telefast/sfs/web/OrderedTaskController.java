@@ -26,8 +26,9 @@ import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
 import com.telefast.sfs.repository.TasksRepository;
+import com.telefast.sfs.service.EmployeeService;
+import com.telefast.sfs.service.OrderedTaskService;
 import com.telefast.sfs.service.TaskService;
-
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -35,22 +36,23 @@ import com.telefast.sfs.service.TaskService;
 public class OrderedTaskController {
 
 	@Autowired
-	private TasksRepository tasksRepository;
-
-	@Autowired
-	private OrderedServiceRepository orderedServiceRepository;
-
-	@Autowired
-	private EmployeeRepository employeeRepository;
+	private OrderedTaskService orderedTaskService;
 
 	@Autowired
 	private OrderedTaskRepository orderedTaskRepository;
 
 	@Autowired
 	private ServiceWorkflowRepository serviceWorkFlowRepository;
-	
+
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
+	@Autowired
+	private OrderedServiceRepository orderedServiceRepository;
+
 
 	@GetMapping
 	public List<OrderedTask> getOrderedTask() {
@@ -65,76 +67,55 @@ public class OrderedTaskController {
 
 	@PostMapping
 	public void add(@RequestBody OrderedTask orderedTask) {
-		Task task = new Task();
-		OrderedService orderedService = new OrderedService();
-		Employee teamMember = new Employee();
-		System.out.println(orderedTask.getOrderedService().getOrderId());
-
-		task = tasksRepository.findById(orderedTask.getTask().getId()).get();
-		orderedService = orderedServiceRepository.findById(orderedTask.getOrderedService().getOrderId()).get();
-		teamMember = employeeRepository.findById(orderedTask.getEmployee().getId()).get();
-
-		System.out.println(orderedTask);
-
-		orderedTask.setTask(task);
-		orderedTask.setOrderedService(orderedService);
-		orderedTask.setEmployee(teamMember);
-
-		orderedTaskRepository.save(orderedTask);
+		orderedTaskService.addOrderedTask(orderedTask);
 	}
-	
-	//get status list
+
+	// get status list
 	@GetMapping("/status")
-	public ResponseEntity<?> getStatusList(){
+	public ResponseEntity<?> getStatusList() {
 		List<Status> status = Arrays.asList(Status.values());
 		return new ResponseEntity<>(status, HttpStatus.ACCEPTED);
 	}
-	
-	//change status of orderedTask by OrderedTaskId
+
+	// change status of orderedTask by OrderedTaskId
 	@PutMapping("/{orderedTaskId}/changeStatus/{statusId}")
-	public ResponseEntity<?> changeStatus(@PathVariable String orderedTaskId, @PathVariable int statusId){
-		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
-		orderedTask.setTaskStatus(Status.values()[statusId]);
-		orderedTaskRepository.save(orderedTask);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> changeStatus(@PathVariable int orderedTaskId, @PathVariable int statusId) {
+		boolean b = orderedTaskService.changeStatus(orderedTaskId, statusId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 
 	// Approve task by orderedTaskId
 	@PutMapping("/{orderedTaskId}/complete")
-	public ResponseEntity<?> completeTask(@PathVariable String orderedTaskId) {
-		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
-		orderedTask.setApproved(true);
-		orderedTaskRepository.save(orderedTask);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> completeTask(@PathVariable int orderedTaskId) {
+		boolean b = orderedTaskService.approveTask(orderedTaskId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
-	
-	
+
+	// Reject task by orderedTaskId
+	@PutMapping("/{orderedTaskId}/reject")
+	public ResponseEntity<?> rejectTask(@PathVariable int orderedTaskId) {
+		boolean b =orderedTaskService.rejectTask(orderedTaskId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
+	}
 
 	// cancel task by orderedtaskId
 	@PutMapping("{orderedTaskId}/cancel")
-	public ResponseEntity<?> cancelTask(@RequestBody String reason, @PathVariable String orderedTaskId) {
-		OrderedTask orderedTask = orderedTaskRepository.findById(Integer.parseInt(orderedTaskId)).get();
-		orderedTask.setTaskDenialReason(reason);
-		orderedTask.setTaskStatus(Status.CANCELLED);
-		orderedTaskRepository.save(orderedTask);
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+	public ResponseEntity<?> cancelTask(@RequestBody String reason, @PathVariable int orderedTaskId) {
+		boolean b =orderedTaskService.cancelTask(reason, orderedTaskId);
+		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 
 	// get all Info(OrderedTask, OrderedService, Project) assigned to Employee
 	@GetMapping(value = "/employee/{employeeId}")
 	public ResponseEntity<?> getTasksByEmployee(@PathVariable String employeeId) {
-		System.out.println("All info of employee-----Before>");
-
-		OrderedTaskRequest orderedTaskRequest = taskService.getAllInfoForEmployeeId(Integer.parseInt(employeeId));	
-		
+		OrderedTaskRequest orderedTaskRequest = employeeService.getAllInfoForEmployeeId(Integer.parseInt(employeeId));
 		return new ResponseEntity<>(orderedTaskRequest, HttpStatus.CREATED);
 	}
 
-	// get all OrderedTasks assigned to a team
+	// get all OrderedTasks assigned to a team by teamManagerId
 	@GetMapping(value = "/teamManager/{teamManagerId}")
 	public ResponseEntity<?> getTasksByTeamManager(@PathVariable String teamManagerId) {
-
-		List<OrderedTask> orderedTaskList = taskService.getOrderedTaskAssignedByTeamManager(Integer.parseInt(teamManagerId));
+		List<OrderedTask> orderedTaskList = orderedTaskService.getOrderedTaskAssignedToTeamManager(Integer.parseInt(teamManagerId));
 		return new ResponseEntity<>(orderedTaskList, HttpStatus.CREATED);
 	}
 

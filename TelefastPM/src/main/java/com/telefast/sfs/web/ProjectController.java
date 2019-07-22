@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.telefast.sfs.model.Employee;
+import com.telefast.sfs.model.Customer;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.repository.CustomerRepository;
@@ -32,7 +33,6 @@ public class ProjectController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -44,6 +44,7 @@ public class ProjectController {
 	public List<Project> getProjects() {
 		return projectRepository.findAll();
 	}
+
 
 	//get services by projectId
 	@GetMapping(value = "/{projectId}/services")
@@ -62,8 +63,12 @@ public class ProjectController {
 
 	@PostMapping
 	public ResponseEntity<?> addProject(@RequestBody Project project) {
+
 		Employee projectManager = employeeRepository.findById(project.getProjectManager().getId()).get();
 		project.setProjectManager(projectManager);
+		Customer customer = new Customer();
+		customer = customerRepository.findById(project.getCustomer().getId()).get();
+		project.setCustomer(customer);
 		return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
 	}
 

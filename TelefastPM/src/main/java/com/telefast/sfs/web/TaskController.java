@@ -22,6 +22,7 @@ import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
+import com.telefast.sfs.model.ServiceWorkflow;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.model.Team;
@@ -35,6 +36,7 @@ import com.telefast.sfs.repository.ServiceRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
 import com.telefast.sfs.repository.TasksRepository;
 import com.telefast.sfs.repository.TeamRepository;
+import com.telefast.sfs.service.TaskService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -42,6 +44,9 @@ import com.telefast.sfs.repository.TeamRepository;
 public class TaskController {
 
 	private RestTemplate restTemplate = new RestTemplate();
+
+	@Autowired
+	private TaskService taskService;
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -75,47 +80,75 @@ public class TaskController {
 
 	@PostMapping("/add")
 	public void add() {
-		Customer customer = new Customer("fname1", "lname1", "address", "1234567890");
-		customerRepository.save(customer);
+//		Customer customer = new Customer("fname1", "lname1", "address", "1234567890");
+//		customerRepository.save(customer);
+////
+//		Service service = new Service("service1", "description1");
+//		serviceRepository.save(service);
 //
-		Service service = new Service("service1", "description1");
-		serviceRepository.save(service);
-//
-		Task task = new Task("task2", "description2", LocalDateTime.now(), LocalDateTime.now(), true);
-		tasksRepository.save(task);
+//		Task task = new Task("task2", "description2", LocalDateTime.now(), LocalDateTime.now(), true);
+//		tasksRepository.save(task);
 //
 //		Team team = new Team("name", "description");
 //		teamRepository.save(team);
 
-		Team team2 = new Team();
-		team2 = teamRepository.findById(4).get();
 //		
 //
-		Employee employee = new Employee(team2, "firstName2", "lastName2", EmpRole.TEAM_MEMBER, "empAddress2",
-				"1234567891", false);
-		employeeRepository.save(employee);
+//		Employee employee = new Employee(team2, "Akshay", "Shete", EmpRole.ROLE_TEAM_MEMBER, "Pune", "12342323231",
+//				true);
+//		Customer customer = new Customer("fname1", "lname1", "address", "1234567890");
+//		customerRepository.save(customer);
+//
+//		Service service = new Service("service1", "description1");
+//		serviceRepository.save(service);
+		
+//
+//		Task task = new Task("task2", "description2", LocalDateTime.now(), LocalDateTime.now(), true);
+//		tasksRepository.save(task);
+//
+//		Team team = new Team("name", "description");
+//		teamRepository.save(team);
 
-		Project project = new Project("name", LocalDateTime.now(), LocalDateTime.now(), Status.IN_PROGRESS, 50,
-				customer, employee);
-		projectRepository.save(project);
+////		
+////
+//		Employee employee = new Employee(team, "firstName1", "lastName1", EmpRole.ROLE_SUPER, "empAddress1",
+//				"1234567891", false);
+//		employeeRepository.save(employee);
+
+//		Project project = new Project("name", LocalDateTime.now(), LocalDateTime.now(), Status.IN_PROGRESS, 50,
+//				customer, employee);
+//		projectRepository.save(project);
+////
+//		OrderedService orderedService = new OrderedService("installationAddress", Status.IN_PROGRESS, 40,
+//				LocalDateTime.now(), LocalDateTime.now(), "serviceDenialReason", service, project, employee);
+//		orderedServiceRepository.save(orderedService);
+
+////
+//		OrderedTask orderedTask = new OrderedTask(Status.NOT_STARTED, LocalDateTime.now(), LocalDateTime.now(),
+//				"taskDenialReason", true, task, orderedService, null);
+
+//		orderedTaskRepository.save(orderedTask);
+		
+//		OrderedService orderedService = orderedServiceRepository.findById(7).get();
+		
+		Service service = serviceRepository.findById(55).get();
+		
+		Task task = tasksRepository.findById(54).get();
+
+		Team team2 = new Team();
+		team2 = teamRepository.findById(4).get();
+
 //
-		OrderedService orderedService = new OrderedService("installationAddress", Status.IN_PROGRESS, 40,
-				LocalDateTime.now(), LocalDateTime.now(), "serviceDenialReason", service, project, employee);
-		orderedServiceRepository.save(orderedService);
-//
-		OrderedTask orderedTask = new OrderedTask(Status.NOT_STARTED, LocalDateTime.now(), LocalDateTime.now(),
-				"taskDenialReason", false, task, orderedService, null);
-		orderedTaskRepository.save(orderedTask);
-//
-//		ServiceWorkflow serviceWorkflow = new ServiceWorkflow( 1, 2, task, team, service);
-//		serviceWorkFlowRepository.save(serviceWorkflow);
+		ServiceWorkflow serviceWorkflow = new ServiceWorkflow( 3, 18, task, team2, service);
+		serviceWorkFlowRepository.save(serviceWorkflow);
+		
 //
 //		OrderedTaskTeam orderedTaskTeam = new OrderedTaskTeam( team, orderedTask);
 //		orderedTaskTeamRepository.save(orderedTaskTeam);
 	}
-	
+
 	@GetMapping
-	public List<Task> getTask(){
+	public List<Task> getTask() {
 		return tasksRepository.findAll();
 	}
 
@@ -130,31 +163,10 @@ public class TaskController {
 
 //	//get task by member
 	@GetMapping(value = "/{employeeId}")
-	public ResponseEntity<?> getTaskByEmployee(@PathVariable String employeeId) {
-		
-		OrderedTask orderedtask = orderedTaskRepository.findByEmployeeId(Integer.parseInt(employeeId));
-		int taskId = orderedtask.getTask().getId();
-
-		Task task = tasksRepository.findById(taskId).get();
-				
-		ResponseEntity<Task> responseEntity = new ResponseEntity<Task>(task, HttpStatus.FOUND);
-		return responseEntity;
+	public ResponseEntity<?> getTaskByEmployee(@PathVariable int employeeId) {
+		Task task = taskService.getTaskByEmployee(employeeId);
+		return new ResponseEntity<>(task, HttpStatus.ACCEPTED);
 	}
-//	
-//	
-	//get all tasks assigned to a team
-	@GetMapping(value = "/{teamManagerId}/tasks")
-	public ResponseEntity<?> getTasks(@PathVariable String teamManagerId){
-		
-		
-		Employee teamManager = employeeRepository.getTeamByManagerId(Integer.parseInt(teamManagerId));
-		int teamId = teamManager.getTeam().getId();
-		
-		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(teamId);
-				
-		return new ResponseEntity<>(tasks, HttpStatus.CREATED);
-	}
-	
 
 
 ////	
@@ -162,6 +174,5 @@ public class TaskController {
 //	public ResponseEntity<?> getTasksByFilter(@PathVariable String filter){
 //		return new ResponseEntity<>(orderedTaskRepository.findbyStatus(filter), HttpStatus.FOUND);
 //	}
-//
 
 }
