@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
+import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
+import com.telefast.sfs.model.ServiceWorkflow;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
+import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.ProjectRepository;
 import com.telefast.sfs.repository.ServiceRepository;
+import com.telefast.sfs.repository.ServiceWorkflowRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -36,10 +40,16 @@ public class OrderedServiceController {
 	private ProjectRepository projectRepository;
 	
 	@Autowired
+	private ServiceWorkflowRepository serviceWorkflowRepository;
+	
+	@Autowired
 	private EmployeeRepository employeeRepository;
 	
 	@Autowired
 	private ServiceRepository serviceRepository; 
+	
+	@Autowired
+	private OrderedTaskRepository orderedTaskRepository;
 	
 	@PutMapping("/{orderedServiceId}/cancel")
 	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable String orderedServiceId) {
@@ -72,11 +82,20 @@ public class OrderedServiceController {
 		service = serviceRepository.findById(orderedService.getService().getId()).get();
 		project = projectRepository.findById(orderedService.getProject().getProjectId()).get();
 		serviceManager = employeeRepository.findById(orderedService.getEmployee().getId()).get();
-
+		
 		orderedService.setService(service);
 		orderedService.setProject(project);
 		orderedService.setEmployee(serviceManager);
 
-		orderedServiceRepository.save(orderedService);
+		orderedService = orderedServiceRepository.save(orderedService);
+		
+		List<ServiceWorkflow> tasks = serviceWorkflowRepository.findByService(service);
+		for(ServiceWorkflow workflow : tasks) {
+			OrderedTask orderedTask = new OrderedTask();
+			orderedTask.setOrderedService(orderedService);
+			orderedTask.setTask(workflow.getTask());
+			orderedTask.setTaskStatus(Status.NOT_STARTED);
+			orderedTaskRepository.save(orderedTask);
+		}
 	}
 }

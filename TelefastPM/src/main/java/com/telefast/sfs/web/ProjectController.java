@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.repository.CustomerRepository;
+import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.ProjectRepository;
 
@@ -27,8 +29,8 @@ public class ProjectController {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-
-
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 
 	@Autowired
@@ -54,12 +56,14 @@ public class ProjectController {
 	@GetMapping(value = "/{projectManagerId}")
 	public ResponseEntity<?> getProject(@PathVariable String projectManagerId) {
 		List<Project> projects = projectRepository.findProjectsByManagerId(Integer.parseInt(projectManagerId));
-		return new ResponseEntity<>(projects, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(projects.get(0), HttpStatus.ACCEPTED);
 		
 	}
 
 	@PostMapping
 	public ResponseEntity<?> addProject(@RequestBody Project project) {
+		Employee projectManager = employeeRepository.findById(project.getProjectManager().getId()).get();
+		project.setProjectManager(projectManager);
 		return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
 	}
 

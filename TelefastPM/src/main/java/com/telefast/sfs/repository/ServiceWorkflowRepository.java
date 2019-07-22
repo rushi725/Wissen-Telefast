@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.ServiceWorkflow;
 import com.telefast.sfs.model.Task;
 
@@ -26,6 +27,8 @@ public interface ServiceWorkflowRepository extends JpaRepository<ServiceWorkflow
 
 	@Query("select s.task from ServiceWorkflow s where s.service.serviceId=?1")
 	List<Task> findTasksByServiceId(int serviceId);
+	
+	List<ServiceWorkflow> findByService(Service service);
 
 
 }

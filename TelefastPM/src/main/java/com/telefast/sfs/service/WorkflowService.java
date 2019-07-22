@@ -8,4 +8,5 @@ public interface WorkflowService {
 	
 	void defineWorkflow(List<ServiceWorkflow> workflows);
 	
+	
 }
