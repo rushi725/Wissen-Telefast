@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
+import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.repository.OrderedServiceRepository;
+import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.TasksRepository;
+import com.telefast.sfs.service.OrderedTaskService;
+import com.telefast.sfs.service.TaskService;
 import com.telefast.sfs.service.WorkflowService;
 
 @CrossOrigin(origins = "*")
@@ -30,64 +34,51 @@ public class StartService {
 	private WorkflowService workFlowService;
 	
 	@Autowired
+	private OrderedTaskService orderedTaskService;
+	
+	@Autowired
 	private OrderedServiceRepository orderedServiceRepository;
 	
 	@Autowired
 	private TasksRepository taskRepository;
 	
-	@PutMapping("/{serviceId}")
-	public ResponseEntity<?> startService(@PathVariable int serviceId){
+	@Autowired
+	private TaskService taskService;
+	
+	@Autowired
+	private OrderedTaskRepository orderedTaskRepository;
+	
+	
+	
+	
+	@PutMapping("/{orderedServiceId}")
+	public ResponseEntity<?> startService(@PathVariable int orderedServiceId){
 //		int count = workFlowService.getSequenceCount(serviceid);
 		
-		Task startingTask = workFlowService.getFirstTask(serviceId);
+		OrderedTask orderedTask = orderedTaskService.getFisrtOrderedTask(orderedServiceId);
+		System.out.println(orderedTask.getTask().getName());
 		
-		System.out.println("starting Task--->");
-		System.out.println(startingTask.getId());
-		System.out.println(serviceId);
-		List<Integer> list = workFlowService.findChildrenIds(startingTask.getId(),serviceId);
-
+		String response = taskService.assignOrderedTask(orderedTask);
 		
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 			
-			list.forEach(taskId->{
+	}
+	
+	@PutMapping("/startNext/{orderedTaskId}")
+	public void startNextTasks(@PathVariable int orderedTaskId){
 				
-				System.out.println("----"+taskId);
-								
-				Task task = taskRepository.findById(taskId).get();
-
-				OrderedTask orderedTask = new OrderedTask();
-				System.out.println("a");
-
-				OrderedService orderedService = orderedServiceRepository.findByServiceId(serviceId);
-				System.out.println("b");
-
-				orderedTask.setTask(task);
-				System.out.println("c");
-
-				orderedTask.setOrderedService(orderedService);
-				System.out.println("d");
-
-//				Employee employee = new Employee();
-//				
-//				orderedService.setEmployee(employee);
-//				System.out.println("e");
-//
-//				orderedService.setStartDate(LocalDateTime.now());
-//				
-//				System.out.println("sdsdsd");
-//				
-				list.addAll(workFlowService.findChildrenIds(startingTask.getId(),serviceId));
-				
-//				List<Integer> list2 = new ArrayList<Integer>();
-//				list2 = workFlowService.findChildrenIds(taskId, serviceId);
-//				
-//				System.out.println("sdksdjksdjskdjskdjskdjskdskdjskdj");
-//				System.out.println(list2);
-				
-				
-			});
+		List<Task> childrenTasks = workFlowService.findChildrensByPrevTask(orderedTaskId);
 		
-		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
-			
+		childrenTasks.forEach(e->System.out.println(e.getName()));
+
+		OrderedTask orderedTask = orderedTaskRepository.findById(orderedTaskId).get();
+		OrderedService orderedService = orderedTask.getOrderedService();
+		int orderedServiceId = orderedService.getOrderId();
+		
+		for(Task task:childrenTasks) {
+			OrderedTask nextOrderedTask = orderedTaskService.findOrderedTaskByTask(task.getId(),orderedServiceId);
+			taskService.assignOrderedTask(nextOrderedTask);
+		}
 		
 	}
 
