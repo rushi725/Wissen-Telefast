@@ -1,9 +1,6 @@
 package com.telefast.sfs.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
-import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.ServiceWorkflow;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.model.Team;
@@ -23,7 +19,6 @@ import com.telefast.sfs.repository.ServiceRepository;
 import com.telefast.sfs.repository.ServiceWorkflowRepository;
 import com.telefast.sfs.repository.TasksRepository;
 import com.telefast.sfs.repository.TeamRepository;
-import com.telefast.sfs.web.OrderedTaskRequest;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -66,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
 //	}
 
 	@Override
-	public String assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
+	public boolean assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
 		// TODO Auto-generated method stub
 		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
 		Team team = serviceWorkflow.getTeam();
@@ -79,9 +74,9 @@ public class TaskServiceImpl implements TaskService {
 			orderedTask.setEmployee(employee);
 			employee.setAvailableStatus(false);
 			orderedTaskRepository.save(orderedTask);
-			return "Task Assigned to-->" + employee.getId();
+			return true;
 		}
-		return "Not allocated";
+		return false;
 	}
 
 	@Override
@@ -111,7 +106,7 @@ public class TaskServiceImpl implements TaskService {
 //	}
 
 	@Override
-	public String assignOrderedTask(OrderedTask orderedTask) {
+	public boolean assignOrderedTask(OrderedTask orderedTask) {
 
 		int taskId = orderedTask.getTask().getId();
 
@@ -130,9 +125,9 @@ public class TaskServiceImpl implements TaskService {
 			orderedTask.setEmployee(employee);
 			employee.setAvailableStatus(false);
 			orderedTaskRepository.save(orderedTask);
-			return "Task Assigned to-->" + employee.getId();
+			return true;
 		}
-		return "Not allocated";
+		return false;
 
 	}
 
