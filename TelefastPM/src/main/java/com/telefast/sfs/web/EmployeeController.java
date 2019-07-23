@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.telefast.sfs.model.EmpRole;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
@@ -31,9 +32,16 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	
 	@GetMapping
 	public List<Employee> getEmployees(){
 		return employeeRepository.findAll();
+	}
+	
+	@GetMapping("/serviceManager")
+	public ResponseEntity<?> getAllServiceManagers(){
+		return new ResponseEntity<>(employeeRepository.findAllServiceManagers(), HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{empId}")
@@ -61,6 +69,15 @@ public class EmployeeController {
 		employee.setAvailableStatus(true);
 		employee.setTeam(team);
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
+
+	}
+	
+	@GetMapping("/{empRole}")
+	public ResponseEntity<?> getEmployeesByRole(@PathVariable EmpRole empRole){
+		List<Employee> list = employeeRepository.findByEmpRole(empRole);
+		
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+
 	}
 
 }

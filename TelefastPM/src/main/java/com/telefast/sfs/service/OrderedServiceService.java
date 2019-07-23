@@ -19,4 +19,6 @@ public interface OrderedServiceService {
 	
 	boolean completeService(int orderedServiceId);
 
+	void updateProgress(OrderedService orderedService);
+
 }

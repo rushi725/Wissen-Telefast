@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.telefast.sfs.model.EmpRole;
 import com.telefast.sfs.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
-	@Query("From Employee emp where emp.team.teamId=?1 and emp.availableStatus=true")
+	@Query("From Employee emp where emp.team.teamId=?1 and emp.availableStatus=true and emp.empRole=com.telefast.sfs.model.EmpRole.ROLE_TEAM_MEMBER")
 	List<Employee> findAllByTeamId(int teamId);
 
 	@Query("from Employee emp where emp.employeeId=?1 and emp.empRole=com.telefast.sfs.model.EmpRole.ROLE_TEAM_MANAGER")
@@ -20,7 +21,14 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 		
 	@Query("from Employee emp where emp.team.teamId=?1 and emp.empRole=com.telefast.sfs.model.EmpRole.ROLE_TEAM_MANAGER")
 	Employee getTeamManagerByTeamId(int teamId);
+
 	@Query("select employeeId from Employee emp where emp.empContactNo=?1")
 	int getEmpId(String empContactNo);
+
+	
+	@Query("from Employee emp where emp.empRole=com.telefast.sfs.model.EmpRole.ROLE_SERVICE_MANAGER")
+	List<Employee> findAllServiceManagers();
+	
+	List<Employee> findByEmpRole(EmpRole empRole);
 
 }

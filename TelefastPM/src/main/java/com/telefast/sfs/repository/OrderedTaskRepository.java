@@ -2,6 +2,7 @@ package com.telefast.sfs.repository;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Service;
+import com.telefast.sfs.model.Status;
 
 @Repository
 public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Integer> {

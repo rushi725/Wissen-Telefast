@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.telefast.sfs.TelefastPMApplication;
 import com.telefast.sfs.model.Employee;
+import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.web.OrderedTaskRequest;
 
 @RunWith(SpringRunner.class)
@@ -37,7 +38,7 @@ public class EmployeeServiceImplTest {
 
 	@Test
 	public void TestGetAllInfoForEmployeeId() {
-		List<OrderedTaskRequest> orderedTaskRequests = employeeService.getAllInfoForEmployeeId(21);
-		assertThat(orderedTaskRequests, instanceOf(List.class));
+		List<OrderedTask> orderedTaskList = employeeService.getAllInfoForEmployeeId(21);
+		assertThat(orderedTaskList, instanceOf(List.class));
 	}
 }

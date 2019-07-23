@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
+import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
+import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.ProjectRepository;
 import com.telefast.sfs.repository.ServiceRepository;
 
@@ -30,6 +32,9 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	@Autowired
+	private OrderedTaskRepository orderedTaskRepository;
 
 	@Override
 	public boolean cancelOrderedService(String reason, int orderedServiceId) {
@@ -102,6 +107,21 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 		if(orderedService == null)
 			return false;
 		else return true;
+	}
+
+	@Override
+	public void updateProgress(OrderedService orderedService) {
+		
+		List<OrderedTask> list = orderedTaskRepository.findByOrderedService(orderedService);
+		
+		int totalOrderedTask = list.size();
+		
+		int completedOrderedTask = (int) list.stream().filter(e->e.getTaskStatus()==Status.COMPLETED).count();
+		
+		int progress = completedOrderedTask/totalOrderedTask*100;
+		
+		orderedService.setProgress(progress);
+		orderedServiceRepository.save(orderedService);
 	}
 
 }

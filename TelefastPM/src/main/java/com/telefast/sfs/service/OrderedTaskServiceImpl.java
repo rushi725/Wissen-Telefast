@@ -64,23 +64,25 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 
 	public boolean changeStatus(int orderedTaskId, int statusId) {
 		OrderedTask orderedTask = orderedTaskRepository.findById(orderedTaskId).get();
+		
+		boolean flag=false;
 
 		if (Status.values()[statusId] == Status.COMPLETED && orderedTask.getTask().getApprovalNeeded() == true) {
 			orderedTask.setTaskStatus(Status.SENT_FOR_APPROVAL);
+			flag=false;
 		} else {
 			if(Status.values()[statusId] == Status.COMPLETED) {
 				orderedTask.getEmployee().setAvailableStatus(true);
+				flag=true;
 			}
 			orderedTask.setTaskStatus(Status.values()[statusId]);
 		}
+		
+		
 
 		orderedTask = orderedTaskRepository.save(orderedTask);
 
-		if (orderedTask == null)
-			return false;
-		else
-			return true;
-
+		return flag;
 	}
 
 	public boolean approveTask(int orderedTaskId) {
