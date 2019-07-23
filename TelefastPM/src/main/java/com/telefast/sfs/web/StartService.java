@@ -18,6 +18,7 @@ import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
+import com.telefast.sfs.repository.OredredTaskTeamRepository;
 import com.telefast.sfs.repository.TasksRepository;
 import com.telefast.sfs.service.OrderedServiceService;
 import com.telefast.sfs.service.OrderedTaskService;
@@ -65,8 +66,15 @@ public class StartService {
 		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
 		
 		orderedService.setServiceStatus(Status.IN_PROGRESS);
+		orderedServiceRepository.save(orderedService);
+		
+		System.out.println("---------------------------->");
+		System.out.println(orderedService.getServiceStatus());
 		
 		boolean response = taskService.assignOrderedTask(orderedTask);
+		
+		System.out.println("response---------------->");
+		System.out.println(response);
 		
 		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
 			
