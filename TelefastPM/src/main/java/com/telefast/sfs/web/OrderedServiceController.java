@@ -77,6 +77,9 @@ public class OrderedServiceController {
 
 	@PostMapping
 	public void addService(@RequestBody OrderedService orderedService) {
+		
+		System.out.println(orderedService);
+		
 		Service service = new Service();
 		Project project = new Project();
 		Employee serviceManager = new Employee();

@@ -28,9 +28,16 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	
 	@GetMapping
 	public List<Employee> getEmployees(){
 		return employeeRepository.findAll();
+	}
+	
+	@GetMapping("/serviceManager")
+	public ResponseEntity<?> getAllServiceManagers(){
+		return new ResponseEntity<>(employeeRepository.findAllServiceManagers(), HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{empId}")

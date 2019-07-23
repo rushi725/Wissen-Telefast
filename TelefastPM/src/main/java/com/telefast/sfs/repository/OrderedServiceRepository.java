@@ -2,12 +2,14 @@ package com.telefast.sfs.repository;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.Service;
+import com.telefast.sfs.model.Status;
 
 @Repository
 public interface OrderedServiceRepository extends JpaRepository<OrderedService, Integer> {
@@ -31,5 +33,8 @@ public interface OrderedServiceRepository extends JpaRepository<OrderedService, 
 
 	@Query("from OrderedService o where o.service.serviceId=?1")
 	OrderedService findByServiceId(int serviceId);
+
+//	@Query("select count(*) from OrderedService o where o.serviceStatus=com.telefast.sfs.model.Status.COMPLETED")
+//	int findCountOfCompletedTask();
 
 }

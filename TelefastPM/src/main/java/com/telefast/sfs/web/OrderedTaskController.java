@@ -80,8 +80,8 @@ public class OrderedTaskController {
 	// change status of orderedTask by OrderedTaskId
 	@PutMapping("/{orderedTaskId}/changeStatus/{statusId}")
 	public ResponseEntity<?> changeStatus(@PathVariable int orderedTaskId, @PathVariable int statusId) {
-		boolean b = orderedTaskService.changeStatus(orderedTaskId, statusId);
-		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
+		boolean flag = orderedTaskService.changeStatus(orderedTaskId, statusId);
+		return new ResponseEntity<>(flag, HttpStatus.ACCEPTED);
 	}
 
 	// Approve task by orderedTaskId
@@ -109,12 +109,9 @@ public class OrderedTaskController {
 	@GetMapping(value = "/employee/{employeeId}")
 	public ResponseEntity<?> getTasksByEmployee(@PathVariable int employeeId) {
 		
-		List<OrderedTaskRequest> ordereTaskRequestList = employeeService.getAllInfoForEmployeeId(employeeId);
-		
-		ordereTaskRequestList.forEach(e->System.out.println(e.getOrderedTask().getTask().getId()));
-		
-//		OrderedTaskRequest orderedTaskRequest = employeeService.getAllInfoForEmployeeId(employeeId);
-		return new ResponseEntity<>(ordereTaskRequestList, HttpStatus.CREATED);
+		List<OrderedTask> ordereTaskList = employeeService.getAllInfoForEmployeeId(employeeId);
+				
+		return new ResponseEntity<>(ordereTaskList, HttpStatus.ACCEPTED);
 	}
 
 	// get all OrderedTasks assigned to a team by teamManagerId
