@@ -18,7 +18,7 @@ import com.telefast.sfs.model.JwtRequest;
 import com.telefast.sfs.model.JwtResponse;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class JwtAuthenticationController {
 	@Autowired
 	private AuthenticationManager authenticationManager;

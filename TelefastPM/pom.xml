@@ -79,7 +79,7 @@
 		
 		<dependency>
 			<groupId>oracle</groupId>
-			<artifactId>jdbc</artifactId>
+			<artifactId>ojdbc</artifactId>
 			<version>6</version>
 			<scope>system</scope>
 			<systemPath>C:\Users\rusha\Downloads\ojdbc6.jar\ojdbc6.jar</systemPath>

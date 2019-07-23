@@ -107,9 +107,14 @@ public class OrderedTaskController {
 
 	// get all Info(OrderedTask, OrderedService, Project) assigned to Employee
 	@GetMapping(value = "/employee/{employeeId}")
-	public ResponseEntity<?> getTasksByEmployee(@PathVariable String employeeId) {
-		OrderedTaskRequest orderedTaskRequest = employeeService.getAllInfoForEmployeeId(Integer.parseInt(employeeId));
-		return new ResponseEntity<>(orderedTaskRequest, HttpStatus.CREATED);
+	public ResponseEntity<?> getTasksByEmployee(@PathVariable int employeeId) {
+		
+		List<OrderedTaskRequest> ordereTaskRequestList = employeeService.getAllInfoForEmployeeId(employeeId);
+		
+		ordereTaskRequestList.forEach(e->System.out.println(e.getOrderedTask().getTask().getId()));
+		
+//		OrderedTaskRequest orderedTaskRequest = employeeService.getAllInfoForEmployeeId(employeeId);
+		return new ResponseEntity<>(ordereTaskRequestList, HttpStatus.CREATED);
 	}
 
 	// get all OrderedTasks assigned to a team by teamManagerId

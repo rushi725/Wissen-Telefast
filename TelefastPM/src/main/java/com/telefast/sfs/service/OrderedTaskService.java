@@ -16,7 +16,11 @@ public interface OrderedTaskService {
 	boolean cancelTask(String reason, int orderedTaskId);
 	
 	boolean transferTask(int taskId, int toEmployeeID);
+	
+	OrderedTask getFisrtOrderedTask(int orderedServiceId);
 
 	
 	List<OrderedTask> getOrderedTaskAssignedToTeamManager(int teamManagerId);
+
+	OrderedTask findOrderedTaskByTask(Integer taskId, int serviceId);
 }

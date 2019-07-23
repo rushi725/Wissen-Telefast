@@ -91,11 +91,14 @@ public class TaskController {
 //
 //		Team team = new Team("name", "description");
 //		teamRepository.save(team);
+		
+//		Team team = teamRepository.findById(11).get();
 
 //		
 //
-//		Employee employee = new Employee(team2, "Akshay", "Shete", EmpRole.ROLE_TEAM_MEMBER, "Pune", "12342323231",
-//				true);
+//		Employee employee = new Employee(null, "Mayuri", "Pawar", EmpRole.ROLE_PROJECT_MANAGER, "Mumbai", "12342323231",
+//				false);
+//		employeeRepository.save(employee);
 //		Customer customer = new Customer("fname1", "lname1", "address", "1234567890");
 //		customerRepository.save(customer);
 //
@@ -115,7 +118,10 @@ public class TaskController {
 //				"1234567891", false);
 //		employeeRepository.save(employee);
 
-//		Project project = new Project("name", LocalDateTime.now(), LocalDateTime.now(), Status.IN_PROGRESS, 50,
+		Customer customer = customerRepository.findById(16).get();
+//		Employee employee = employeeRepository.findById(120).get();
+//		
+//		Project project = new Project("Testing Project", LocalDateTime.now(), LocalDateTime.now(), Status.NOT_STARTED, 50,
 //				customer, employee);
 //		projectRepository.save(project);
 ////
@@ -131,16 +137,16 @@ public class TaskController {
 		
 //		OrderedService orderedService = orderedServiceRepository.findById(7).get();
 		
-		Service service = serviceRepository.findById(55).get();
-		
-		Task task = tasksRepository.findById(54).get();
-
-		Team team2 = new Team();
-		team2 = teamRepository.findById(4).get();
-
+//		Service service = serviceRepository.findById(55).get();
+//		
+//		Task task = tasksRepository.findById(54).get();
 //
-		ServiceWorkflow serviceWorkflow = new ServiceWorkflow( 3, 18, task, team2, service);
-		serviceWorkFlowRepository.save(serviceWorkflow);
+//		Team team2 = new Team();
+//		team2 = teamRepository.findById(4).get();
+//
+////
+//		ServiceWorkflow serviceWorkflow = new ServiceWorkflow( 3, 18, task, team2, service);
+//		serviceWorkFlowRepository.save(serviceWorkflow);
 		
 //
 //		OrderedTaskTeam orderedTaskTeam = new OrderedTaskTeam( team, orderedTask);
@@ -160,13 +166,6 @@ public class TaskController {
 	// -------------------------------------------------------------------
 	// Team member
 	// -------------------------------------------------------------------
-
-//	//get task by member
-	@GetMapping(value = "/{employeeId}")
-	public ResponseEntity<?> getTaskByEmployee(@PathVariable int employeeId) {
-		Task task = taskService.getTaskByEmployee(employeeId);
-		return new ResponseEntity<>(task, HttpStatus.ACCEPTED);
-	}
 
 
 ////	

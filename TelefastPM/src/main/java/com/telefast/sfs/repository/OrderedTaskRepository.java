@@ -18,7 +18,7 @@ public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Intege
 	OrderedTask findOrderTaskId(int orderServiceId,int taskId);
 
 	@Query("from OrderedTask o where o.employee.employeeId=?1")
-	OrderedTask findByEmployeeId(int employeeId);
+	List<OrderedTask> findByEmployeeId(int employeeId);
 
 //	@Query("select o.task from OrderedTask o where o.task.taskId=?1")
 //	OrderedTask findTaskbyTaskId(int taskId);
@@ -28,7 +28,7 @@ public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Intege
 	
 //	@Query("from OrderedTask o where o.task.taskId=?1")
 //	OrderedTask findOrderTaskId(int taskId);
-	
+		
 	List<OrderedTask> findByOrderedService(OrderedService orderedService);
 
 

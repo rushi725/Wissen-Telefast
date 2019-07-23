@@ -15,9 +15,11 @@ public interface TaskService {
 //	List<ServiceWorkflow> dependsOn(Task task, Service service, Team team);
 
 	boolean assignTaskToTeam(int serviceId, int taskId, int teamId,int sequenceNo);
+	
+	String assignOrderedTask(OrderedTask orderedTask);
 
 	String assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId);
 	
-	Task getTaskByEmployee(int employeeId);
+//	Task getTaskByEmploye(int employeeId);
 
 }

@@ -1,5 +1,6 @@
 package com.telefast.sfs.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -39,11 +40,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeRepository.findAllByTeamId(id);
 		}
 
-	public OrderedTaskRequest getAllInfoForEmployeeId(int employeeId) {
+	public List<OrderedTaskRequest> getAllInfoForEmployeeId(int employeeId) {
 
-		OrderedTask orderedTask = orderedTaskRepository.findByEmployeeId(employeeId);
-		System.out.println(orderedTask.getTask().getId());
+		List<OrderedTask> orderedTaskList = orderedTaskRepository.findByEmployeeId(employeeId);
+		List<OrderedTaskRequest> list = new ArrayList<OrderedTaskRequest>();
 
+		for(OrderedTask orderedTask : orderedTaskList) {
+			
 		OrderedService orderedService = orderedServiceRepository.findById(orderedTask.getOrderedService().getOrderId()).get();
 		System.out.println(orderedService.getService().getId());
 		
@@ -61,7 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 		orderedTaskRequest.setProject(project);
 		orderedTaskRequest.setEmployee(manager);
 		
-		return orderedTaskRequest;
+		list.add(orderedTaskRequest);
+		}
+
+		return list;
 	}
 
 

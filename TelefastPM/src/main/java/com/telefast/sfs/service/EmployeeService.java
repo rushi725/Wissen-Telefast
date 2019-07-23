@@ -10,5 +10,8 @@ public interface EmployeeService {
 
 	List<Employee> allAvailableEmployees(int teamId);
 	
-	OrderedTaskRequest getAllInfoForEmployeeId(int employeeId);
+//	OrderedTaskRequest getAllInfoForEmployeeId(int employeeId);
+	
+	List<OrderedTaskRequest> getAllInfoForEmployeeId(int employeeId);
+
 }
