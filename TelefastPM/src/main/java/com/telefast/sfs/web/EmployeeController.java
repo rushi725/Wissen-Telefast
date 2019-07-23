@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.telefast.sfs.model.EmpRole;
 import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.service.EmployeeService;
@@ -58,8 +59,13 @@ public class EmployeeController {
 	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
 	
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
-
-
+	}
+	
+	@GetMapping("/{empRole}")
+	public ResponseEntity<?> getEmployeesByRole(@PathVariable EmpRole empRole){
+		List<Employee> list = employeeRepository.findByEmpRole(empRole);
+		
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.telefast.sfs.model.EmpRole;
 import com.telefast.sfs.model.Employee;
 
 @Repository
@@ -23,5 +24,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 	@Query("from Employee emp where emp.empRole=com.telefast.sfs.model.EmpRole.ROLE_SERVICE_MANAGER")
 	List<Employee> findAllServiceManagers();
+	
+	List<Employee> findByEmpRole(EmpRole empRole);
 
 }

@@ -20,7 +20,7 @@ public class ServiceWorkflow {
 	@Column(nullable = true)
 	private int seqNumber;
 	
-	private int nextTasks;
+	private int prevTask;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "taskId")
@@ -39,13 +39,13 @@ public class ServiceWorkflow {
 	}
 	@Override
 	public String toString() {
-		return "ServiceWorkflow [workFlowId=" + workFlowId + ", seqNumber=" + seqNumber + ", nextTasks=" + nextTasks
+		return "ServiceWorkflow [workFlowId=" + workFlowId + ", seqNumber=" + seqNumber + ", prevTask=" + prevTask
 				+ ", task=" + task.getId() + ", team=" + team.getId() + ", service=" + service.getId() + "]";
 	}
-	public ServiceWorkflow( int seqNumber, int nextTasks, Task task, Team team, Service service) {
+	public ServiceWorkflow( int seqNumber, int prevTask, Task task, Team team, Service service) {
 		super();
 		this.seqNumber = seqNumber;
-		this.nextTasks = nextTasks;
+		this.prevTask = prevTask;
 		this.task = task;
 		this.team = team;
 		this.service = service;
@@ -77,11 +77,11 @@ public class ServiceWorkflow {
 	}
 
 	public int getPrevTask() {
-		return nextTasks;
+		return prevTask;
 	}
 
 	public void setPrevTasks(int prevTask) {
-		this.nextTasks = prevTask;
+		this.prevTask = prevTask;
 	}
 
 	public Task getTask() {

@@ -1,7 +1,5 @@
 package com.telefast.sfs.web;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.telefast.sfs.model.Employee;
 import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
-import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
 import com.telefast.sfs.repository.OrderedServiceRepository;
@@ -70,7 +66,7 @@ public class StartService {
 		
 		orderedService.setServiceStatus(Status.IN_PROGRESS);
 		
-		String response = taskService.assignOrderedTask(orderedTask);
+		boolean response = taskService.assignOrderedTask(orderedTask);
 		
 		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
 			

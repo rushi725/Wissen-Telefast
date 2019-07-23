@@ -57,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // don't authenticate this particular request
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
-				.antMatchers(HttpMethod.GET,"/sfs/user/**").permitAll()
-				.antMatchers("/sfs/user/register").permitAll()
+				// .antMatchers(HttpMethod.GET,"/sfs/user/**").permitAll()
+				.antMatchers("/sfs/user/**").permitAll()
 				.antMatchers("/v2/api-docs").permitAll()
 				.antMatchers("/swagger-ui.html/**").permitAll()
 				.antMatchers("/swagger-resources/**").permitAll()

@@ -1,6 +1,6 @@
 package com.telefast.sfs.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,9 +21,9 @@ public class OrderedTask {
 	private int orderedTaskId;
 	@Enumerated
 	private Status taskStatus;
-	private LocalDateTime startDate;
-	private LocalDateTime endDate;
-	public OrderedTask(Status taskStatus, LocalDateTime startDate, LocalDateTime endDate,
+	private LocalDate startDate;
+	private LocalDate endDate;
+	public OrderedTask(Status taskStatus, LocalDate startDate, LocalDate endDate,
 			String taskDenialReason, Boolean approved, Task task, OrderedService orderedService, Employee employee) {
 		super();
 		this.taskStatus = taskStatus;
@@ -66,16 +66,16 @@ public class OrderedTask {
 	public void setTaskStatus(Status taskStatus) {
 		this.taskStatus = taskStatus;
 	}
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	public String getTaskDenialReason() {

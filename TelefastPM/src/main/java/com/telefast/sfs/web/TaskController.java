@@ -119,11 +119,11 @@ public class TaskController {
 //		employeeRepository.save(employee);
 
 		Customer customer = customerRepository.findById(16).get();
-		Employee employee = employeeRepository.findById(120).get();
-		
-		Project project = new Project("Testing Project", LocalDateTime.now(), LocalDateTime.now(), Status.NOT_STARTED, 50,
-				customer, employee);
-		projectRepository.save(project);
+//		Employee employee = employeeRepository.findById(120).get();
+//		
+//		Project project = new Project("Testing Project", LocalDateTime.now(), LocalDateTime.now(), Status.NOT_STARTED, 50,
+//				customer, employee);
+//		projectRepository.save(project);
 ////
 //		OrderedService orderedService = new OrderedService("installationAddress", Status.IN_PROGRESS, 40,
 //				LocalDateTime.now(), LocalDateTime.now(), "serviceDenialReason", service, project, employee);
