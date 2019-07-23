@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.telefast.sfs.model.Employee;
+import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
+import com.telefast.sfs.repository.TeamRepository;
 import com.telefast.sfs.service.EmployeeService;
-import com.telefast.sfs.service.EmployeeServiceImpl;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -25,6 +26,8 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	@Autowired
+	private TeamRepository teamRepo;
 	
 	@Autowired
 	private EmployeeService employeeService;
@@ -46,13 +49,18 @@ public class EmployeeController {
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 
 	}
+	@GetMapping("/id/{empContactNo}")
+	public int getEmployeeId(@PathVariable String empContactNo) {
+		return employeeRepository.getEmpId(empContactNo);
+	}
+
 	
-	@PostMapping
-	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
-	
+	@PostMapping("/{teamId}")
+	public ResponseEntity<?> addEmployee(@RequestBody Employee employee,@PathVariable int teamId) {
+		Team team =teamRepo.findById(teamId).get();
+		employee.setAvailableStatus(true);
+		employee.setTeam(team);
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
-
-
 	}
 
 }

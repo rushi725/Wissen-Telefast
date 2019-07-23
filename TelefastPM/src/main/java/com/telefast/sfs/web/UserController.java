@@ -32,27 +32,19 @@ public class UserController {
 //	public ResponseEntity<?> addUser(@RequestBody User user) {
 //		return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
 //	}
-	@DeleteMapping("delete/{userId}")
+	@DeleteMapping("/delete/{userId}")
 	public void deleteUser(@PathVariable int userId){
 		userRepository.deleteById(userId);
 	}
 
 
-	@PostMapping("/register")
-	public ResponseEntity<?> addUser(@RequestBody User user) {
-		Employee employee = employeeRepo.findById(user.getEmployee().getId()).get();
+	@PostMapping("/register/{empId}")
+	public ResponseEntity<?> addUser(@RequestBody User user,@PathVariable int empId) {
+		Employee employee = employeeRepo.findById(empId).get();
 		user.setEmployee(employee);
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
 	}
 
-
-	@GetMapping("{userName}/getUserRole")
-	public ResponseEntity<?> getUserRole(@PathVariable String userName) {
-		User user = userRepository.findByUserName(userName);
-		Employee emp = user.getEmployee();
-		return new ResponseEntity<>(emp.getEmpRole(), HttpStatus.ACCEPTED);
-	}
-	
 	
 }
