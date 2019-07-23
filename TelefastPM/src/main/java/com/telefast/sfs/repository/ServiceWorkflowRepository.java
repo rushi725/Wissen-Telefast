@@ -13,7 +13,7 @@ import com.telefast.sfs.model.Task;
 @Repository
 public interface ServiceWorkflowRepository extends JpaRepository<ServiceWorkflow, Integer> {
 	
-	@Query("select s.task.taskId from ServiceWorkflow s where s.nextTasks=?1 and s.service.serviceId=?2")
+	@Query("select s.task.taskId from ServiceWorkflow s where s.prevTask=?1 and s.service.serviceId=?2")
 	List<Integer> findChildrenIds(int taskId,int serviceId);
 
 	//	@Query("select workFlowId FROM ServiceWorkflow SW WHERE SW.depeendentOn=?1 AND SW.SERVICE.SERVICEID=?2 and SW.TEAM.TEAMID=?3")

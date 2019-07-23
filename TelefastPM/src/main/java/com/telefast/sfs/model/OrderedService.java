@@ -1,8 +1,7 @@
 
 package com.telefast.sfs.model;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -27,8 +26,8 @@ public class OrderedService {
 	@Enumerated
 	private Status serviceStatus;
 	private int progress;
-	private LocalDateTime startDate;
-	private LocalDateTime deliveryDate;
+	private LocalDate startDate;
+	private LocalDate deliveryDate;
 	private String serviceDenialReason;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
@@ -48,7 +47,7 @@ public class OrderedService {
 	}
 	
 	public OrderedService( String installationAddress, Status serviceStatus, int progress,
-			LocalDateTime startDate, LocalDateTime deliveryDate, String serviceDenialReason, Service service,
+			LocalDate startDate, LocalDate deliveryDate, String serviceDenialReason, Service service,
 			Project project, Employee employee) {
 		super();
 		this.installationAddress = installationAddress;
@@ -102,19 +101,19 @@ public class OrderedService {
 		this.progress = progress;
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getDeliveryDate() {
+	public LocalDate getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(LocalDateTime deliveryDate) {
+	public void setDeliveryDate(LocalDate deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 

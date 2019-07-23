@@ -114,8 +114,8 @@ public class OrderedTaskController {
 
 	// get all OrderedTasks assigned to a team by teamManagerId
 	@GetMapping(value = "/teamManager/{teamManagerId}")
-	public ResponseEntity<?> getTasksByTeamManager(@PathVariable String teamManagerId) {
-		List<OrderedTask> orderedTaskList = orderedTaskService.getOrderedTaskAssignedToTeamManager(Integer.parseInt(teamManagerId));
+	public ResponseEntity<?> getTasksByTeamManager(@PathVariable int teamManagerId) {
+		List<OrderedTask> orderedTaskList = orderedTaskService.getOrderedTaskAssignedToTeamManager(teamManagerId);
 		return new ResponseEntity<>(orderedTaskList, HttpStatus.CREATED);
 	}
 

@@ -76,7 +76,7 @@ public class OrderedServiceController {
 	}
 
 	@PostMapping
-	public void addService(@RequestBody OrderedService orderedService) {
+	public ResponseEntity<?> addService(@RequestBody OrderedService orderedService) {
 		Service service = new Service();
 		Project project = new Project();
 		Employee serviceManager = new Employee();
@@ -99,6 +99,7 @@ public class OrderedServiceController {
 			orderedTask.setTaskStatus(Status.NOT_STARTED);
 			orderedTaskRepository.save(orderedTask);
 		}
+		return new ResponseEntity<>(orderedService, HttpStatus.CREATED);
 	}
 	//get orderedServices by serviceManagerId
 	@GetMapping("/serviceManager/{serviceManagerId}")

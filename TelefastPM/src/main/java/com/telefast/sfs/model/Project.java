@@ -1,6 +1,6 @@
 package com.telefast.sfs.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -26,11 +26,21 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int projectId;
 	private String name;
-	private LocalDateTime startDate;
-	private LocalDateTime deliveryDate;
+	private LocalDate startDate;
+	private LocalDate deliveryDate;
 	@Enumerated
 	private Status status;
 	private int progress;
+	
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@OneToOne
 	@JoinColumn(name = "customerId")
@@ -40,7 +50,7 @@ public class Project {
 	@JoinColumn(name = "employeeId")
 	private Employee projectManager;
 	
-	public Project(String name, LocalDateTime startDate, LocalDateTime deliveryDate, Status status,
+	public Project(String name, LocalDate startDate, LocalDate deliveryDate, Status status,
 			int progress, Customer customer, Employee projectManager) {
 		super();
 		this.name = name;
@@ -73,19 +83,19 @@ public class Project {
 		this.name = name;
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getDeliveryDate() {
+	public LocalDate getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(LocalDateTime deliveryDate) {
+	public void setDeliveryDate(LocalDate deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 
