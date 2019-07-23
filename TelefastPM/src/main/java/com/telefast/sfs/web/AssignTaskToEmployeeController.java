@@ -27,7 +27,7 @@ public class AssignTaskToEmployeeController {
 	@PutMapping("/employee/{serviceId}/{taskId}/{orderedServiceId}")
 	public ResponseEntity<?> assignTask(@PathVariable int serviceId,@PathVariable int taskId,@PathVariable int orderedServiceId){
 
-		String response = taskService.assignTaskToEmployee(taskId,serviceId,orderedServiceId);
+		boolean response = taskService.assignTaskToEmployee(taskId,serviceId,orderedServiceId);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 		
 	}
