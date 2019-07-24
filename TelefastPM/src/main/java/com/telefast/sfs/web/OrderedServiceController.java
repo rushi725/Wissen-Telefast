@@ -108,10 +108,11 @@ public class OrderedServiceController {
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 	
-	//get orderedServices by projectManagerId
-	@GetMapping("/projectManager/{projectManagerId}")
-	public ResponseEntity<?> getOrderedServicesByProjectManagerId(@PathVariable int projectManagerId){
-		List<OrderedService> list = orderedServiceService.findAllOrderedServiceByProjectManagerId(projectManagerId);
+	//get orderedServices by projectId
+	@GetMapping("/projectManager/{projectId}")
+	public ResponseEntity<?> getOrderedServicesByProjectManagerId(@PathVariable int projectId){
+		Project project = projectRepository.findById(projectId).get();
+		List<OrderedService> list = orderedServiceRepository.findByProject(project);
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 

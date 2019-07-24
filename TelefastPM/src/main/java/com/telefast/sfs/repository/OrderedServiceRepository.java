@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.telefast.sfs.model.OrderedService;
+import com.telefast.sfs.model.Project;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.Status;
 
@@ -33,6 +34,8 @@ public interface OrderedServiceRepository extends JpaRepository<OrderedService, 
 
 	@Query("from OrderedService o where o.service.serviceId=?1")
 	OrderedService findByServiceId(int serviceId);
+	
+	List<OrderedService> findByProject(Project project);
 
 //	@Query("select count(*) from OrderedService o where o.serviceStatus=com.telefast.sfs.model.Status.COMPLETED")
 //	int findCountOfCompletedTask();

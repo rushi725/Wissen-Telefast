@@ -58,7 +58,7 @@ public class ProjectController {
 	@GetMapping(value = "/{projectManagerId}")
 	public ResponseEntity<?> getProject(@PathVariable String projectManagerId) {
 		List<Project> projects = projectRepository.findProjectsByManagerId(Integer.parseInt(projectManagerId));
-		return new ResponseEntity<>(projects.get(0), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(projects, HttpStatus.ACCEPTED);
 		
 	}
 

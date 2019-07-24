@@ -88,7 +88,9 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 	public boolean approveTask(int orderedTaskId) {
 		OrderedTask orderedTask = orderedTaskRepository.findById(orderedTaskId).get();
 		orderedTask.setTaskStatus(Status.COMPLETED);
-
+	    Employee employee = orderedTask.getEmployee();
+	    employee.setAvailableStatus(true);
+	    employeeRepository.save(employee);
 		orderedTask.setApproved(true);
 		orderedTask = orderedTaskRepository.save(orderedTask);
 		if (orderedTask == null)
