@@ -2,6 +2,7 @@ package com.telefast.sfs.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +80,25 @@ public class TaskServiceImpl implements TaskService {
 ////		}
 //		return false;
 //	}
+//	@Override
+//	public boolean assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
+//		// TODO Auto-generated method stub
+//		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
+//		Team team = serviceWorkflow.getTeam();
+//		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
+//		List<Employee> employees = employeeRepository.findAllByTeamId(team.getId());
+//		int length = employees.size();
+//		if (length == 0)
+//			return false;
+//		Random rand = new Random();
+//		int n = rand.nextInt(length);
+//		Employee employee = employees.get(n);
+//		orderedTask.setEmployee(employee);
+//		employee.setAvailableStatus(false);
+//		orderedTaskRepository.save(orderedTask);
+//		return true;
+//
+//	}
 
 	@Override
 	public boolean assignTaskToTeam(int serviceId, int taskId, int teamId, int sequenceNo) {
@@ -119,16 +139,30 @@ public class TaskServiceImpl implements TaskService {
 		Team team = serviceWorkflow.getTeam();
 
 		List<Employee> employees = employeeRepository.findAllAvailableByTeamId(team.getId());
-		for (Employee employee : employees) {
-
-			orderedTask.setEmployee(employee);
-			employee.setAvailableStatus(false);
-			orderedTask.setStartDate(LocalDate.now());
-			
-			orderedTaskRepository.save(orderedTask);
-			return true;
-		}
-		return false;
+		
+		
+		int length = employees.size();
+		if (length == 0)
+			return false;
+		Random rand = new Random();
+		int n = rand.nextInt(length);
+		Employee employee = employees.get(n);
+		orderedTask.setEmployee(employee);
+		employee.setAvailableStatus(false);
+		orderedTaskRepository.save(orderedTask);
+		return true;
+		
+		
+//		for (Employee employee : employees) {
+//
+//			orderedTask.setEmployee(employee);
+//			employee.setAvailableStatus(false);
+//			orderedTask.setStartDate(LocalDate.now());
+//			
+//			orderedTaskRepository.save(orderedTask);
+//			return true;
+//		}
+//		return false;
 
 	}
 

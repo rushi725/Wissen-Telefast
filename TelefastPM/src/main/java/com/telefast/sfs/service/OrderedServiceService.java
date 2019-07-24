@@ -14,9 +14,7 @@ public interface OrderedServiceService {
 
 	List<OrderedService> findAllOrderedServiceByProjectManagerId(int projectManagerId);
 	
-	boolean cancelOrderedService(String reason, int orderedServiceId);
-	
-	boolean cancelService(String reason,int orderedServiceId);
+
 	
 	boolean completeService(int orderedServiceId);
 

@@ -38,9 +38,9 @@ public class UserController {
 	}
 
 
-	@PostMapping("/register/{empId}")
-	public ResponseEntity<?> addUser(@RequestBody User user,@PathVariable int empId) {
-		Employee employee = employeeRepo.findById(empId).get();
+	@PostMapping("/register")
+	public ResponseEntity<?> addUser(@RequestBody User user) {
+		Employee employee = employeeRepo.findById(user.getEmployee().getId()).get();
 		user.setEmployee(employee);
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);

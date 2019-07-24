@@ -36,18 +36,7 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 	@Autowired
 	private OrderedTaskRepository orderedTaskRepository;
 
-	@Override
-	public boolean cancelOrderedService(String reason, int orderedServiceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
-		orderedService.setServiceDenialReason(reason);
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedServiceRepository.save(orderedService);
-		
-		if(orderedService.getServiceStatus()==Status.CANCELLED)
-		return true;
-		
-		else return false;
-	}
+
 
 	@Override
 	public List<OrderedService> findAllOrderedServicesByServiceManagerId(int serviceManagerId) {
@@ -85,18 +74,7 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 		else return true;
 	}
 
-	@Override
-	public boolean cancelService(String reason, int orderedServiceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
-		orderedService.setServiceDenialReason(reason);
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedService = orderedServiceRepository.save(orderedService);
-		
-		orderedService = orderedServiceRepository.save(orderedService);
-		if(orderedService == null)
-			return false;
-		else return true;
-	}
+
 
 	@Override
 	public boolean completeService(int orderedServiceId) {

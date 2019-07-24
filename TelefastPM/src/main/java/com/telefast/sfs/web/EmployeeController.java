@@ -72,13 +72,10 @@ public class EmployeeController {
 	}
 
 	
-	@PostMapping("/{teamId}")
-	public ResponseEntity<?> addEmployee(@RequestBody Employee employee,@PathVariable int teamId) {
-		Team team =teamRepo.findById(teamId).get();
+	@PostMapping()
+	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
 		employee.setAvailableStatus(true);
-		employee.setTeam(team);
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
-
 	}
 	
 	@GetMapping("/{empRole}")

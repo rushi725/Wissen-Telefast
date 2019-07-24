@@ -55,6 +55,7 @@ public class OrderedTaskServiceTest {
 	@Transactional
 	public void changeStatusTest() {
 		assertTrue(orderedTaskService.changeStatus(34, 3));
+
 	}
 
 	@Test

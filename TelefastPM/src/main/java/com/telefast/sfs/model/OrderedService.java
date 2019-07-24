@@ -30,15 +30,15 @@ public class OrderedService {
 	private LocalDate deliveryDate;
 	private String serviceDenialReason;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "serviceId")
 	private Service service;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectId")
 	private Project project;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "employeeId")
 	private Employee employee;
 
@@ -149,6 +149,4 @@ public class OrderedService {
 		this.employee = employee;
 	}
 	
-	
-
 }
