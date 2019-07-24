@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,33 +28,40 @@ public class OrderedTaskServiceTest {
 	}
 
 	@Test
+	@Transactional
 	public void transferTaskTest() {
-		assertTrue(orderedTaskService.transferTask(1, 34));
+		assertTrue(orderedTaskService.transferTask(33, 6));
 	}
 
+	@Transactional
 	@Test
 	public void cancelTaskTask() {
-		assertTrue(orderedTaskService.cancelTask("test", 1));
+		assertTrue(orderedTaskService.cancelTask("test", 33));
 	}
 
 	@Test
+	@Transactional
 	public void rejectTaskTest() {
-		assertTrue(orderedTaskService.rejectTask(1));
+		assertTrue(orderedTaskService.rejectTask(33));
 	}
 
 	@Test
+	@Transactional
 	public void approveTaskTest() {
-		assertTrue(orderedTaskService.approveTask(1));
+		assertTrue(orderedTaskService.approveTask(33));
 	}
 
 	@Test
+	@Transactional
 	public void changeStatusTest() {
-		assertTrue(orderedTaskService.changeStatus(1, 5));
+		assertTrue(orderedTaskService.changeStatus(34, 3));
+
 	}
 
 	@Test
+	@Transactional
 	public void getOrderedTaskAssignedToTeamManagerTest() {
-		List<OrderedTask> orderedTasks = orderedTaskService.getOrderedTaskAssignedToTeamManager(4);
-		assertTrue(orderedTasks.stream().allMatch(e -> e.getEmployee().getId() == 4));
+		List<OrderedTask> orderedTasks = orderedTaskService.getOrderedTaskAssignedToTeamManager(12);
+		assertTrue(orderedTasks.stream().allMatch(e -> e.getEmployee().getId() == 12));
 	}
 }

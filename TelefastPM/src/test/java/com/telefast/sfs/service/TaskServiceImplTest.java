@@ -28,20 +28,14 @@ import com.telefast.sfs.TelefastPMApplication;
 
 		@Test
 		public void testAssignTaskToTeamTest() {
-			assertTrue(taskService.assignTaskToTeam(2, 1, 3, 1));
-		}
-
-		@Test
-		public void testAssignTaskToEmployeeTest() {
-			assertTrue(taskService.assignTaskToEmployee(1, 2, 60));
+			assertTrue(taskService.assignTaskToTeam(25, 18, 3, 2));
 		}
 
 //		@Test
-//		public void getTaskByEmployeeTest() {
-//			Task expectedTask = tasksRepository.findById(1).get();
-//			Task actualTask = taskService.getTaskByEmployee(29);
-//			assertTrue(expectedTask.equals(actualTask));
+//		public void testAssignTaskToEmployeeTest() {
+//			assertTrue(taskService.assignTaskToEmployee(1, 2, 60));
 //		}
+
 	}
 	
 

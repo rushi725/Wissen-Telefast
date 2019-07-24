@@ -60,7 +60,7 @@ public class ServiceWorkFlowController {
 		service = serviceRepository.findById(serviceWorkFlow.getService().getId()).get();
 		task = tasksRepository.findById(serviceWorkFlow.getTask().getId()).get();
 		team = teamRepository.findById(serviceWorkFlow.getTeam().getId()).get();
-		System.out.println(serviceWorkFlow.getPrevTask());
+//		System.out.println(serviceWorkFlow.getPrevTask());
 		serviceWorkFlow.setPrevTasks(serviceWorkFlow.getPrevTask());
 
 		serviceWorkFlow.setService(service);

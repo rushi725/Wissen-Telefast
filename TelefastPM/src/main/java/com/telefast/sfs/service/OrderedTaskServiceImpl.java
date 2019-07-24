@@ -1,7 +1,9 @@
 package com.telefast.sfs.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Status;
 import com.telefast.sfs.model.Task;
+import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
 import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
@@ -42,13 +45,11 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 		Task task = new Task();
 		OrderedService orderedService = new OrderedService();
 		Employee teamMember = new Employee();
-		System.out.println(orderedTask.getOrderedService().getOrderId());
 
 		task = tasksRepository.findById(orderedTask.getTask().getId()).get();
 		orderedService = orderedServiceRepository.findById(orderedTask.getOrderedService().getOrderId()).get();
 		teamMember = employeeRepository.findById(orderedTask.getEmployee().getId()).get();
 
-		System.out.println(orderedTask);
 
 		orderedTask.setTask(task);
 		orderedTask.setOrderedService(orderedService);
@@ -73,15 +74,12 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 		} else {
 			if(Status.values()[statusId] == Status.COMPLETED) {
 				orderedTask.getEmployee().setAvailableStatus(true);
+				orderedTask.setEndDate(LocalDate.now());
 				flag=true;
 			}
 			orderedTask.setTaskStatus(Status.values()[statusId]);
 		}
-		
-		
-
 		orderedTask = orderedTaskRepository.save(orderedTask);
-
 		return flag;
 	}
 
@@ -91,18 +89,19 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 	    Employee employee = orderedTask.getEmployee();
 	    employee.setAvailableStatus(true);
 	    employeeRepository.save(employee);
+		orderedTask.setEndDate(LocalDate.now());
 		orderedTask.setApproved(true);
+		orderedTask.getEmployee().setAvailableStatus(true);
 		orderedTask = orderedTaskRepository.save(orderedTask);
 		if (orderedTask == null)
 			return false;
 		else
 			return true;
-
 	}
 
 	public boolean rejectTask(int orderedTaskId) {
 		OrderedTask orderedTask = orderedTaskRepository.findById(orderedTaskId).get();
-		orderedTask.setTaskStatus(Status.NOT_STARTED);
+		orderedTask.setTaskStatus(Status.PENDING);
 		orderedTask.setApproved(false);
 		orderedTask = orderedTaskRepository.save(orderedTask);
 		if (orderedTask == null)
@@ -147,14 +146,12 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 	}
 
 	public List<OrderedTask> getOrderedTaskAssignedToTeamManager(int teamManagerId) {
-		Employee teamManager = employeeRepository.getTeamByManagerId(teamManagerId);
-		int teamId = teamManager.getTeam().getId();
-		System.out.println("get teamManagerId");
-		System.out.println(teamId);
+		System.out.println(teamManagerId);
+		Team team = employeeRepository.getTeamByManagerId(teamManagerId);
 
-		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(teamId);
-		System.out.println("printing taskIds----------------------");
-		tasks.forEach(e->System.out.println(e.getId()));
+		System.out.println("printing team id---->");
+		System.out.println(team.getId());
+		List<Task> tasks = serviceWorkFlowRepository.findTasksByTeamId(team.getId());
 
 		List<Integer> taskIds = new ArrayList<Integer>();
 		tasks.forEach(e -> taskIds.add(e.getId()));
@@ -164,25 +161,43 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 	}
 
 	@Override
-	public OrderedTask getFisrtOrderedTask(int orderedServiceId) {
-
+	public List<OrderedTask> getFisrtOrderedTask(int orderedServiceId) {
+		
 		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
 		int serviceId = orderedService.getService().getId();
-		System.out.println(serviceId+"+");
 
-		Task startingTask = workFlowService.getFirstTask(serviceId);
-		
-		System.out.println(serviceId+"+"+startingTask.getName());
+		List<Task> startingTasks = workFlowService.getFirstTask(serviceId);
+		List<Integer> startingTaskIds = new ArrayList<Integer>();
+		startingTasks.forEach(e -> startingTaskIds.add(e.getId()));
 
-		OrderedTask FirstOrderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, startingTask.getId());
+		List<OrderedTask> FirstOrderedTaskList = orderedTaskRepository.findAllOrderedTaskByTaskId(startingTaskIds);	
 		
-		return FirstOrderedTask;
+		FirstOrderedTaskList=FirstOrderedTaskList
+		.stream()
+		.filter(e->e.getOrderedService().getOrderId()==orderedServiceId)
+		.collect(Collectors.toList());
+		
+		
+		return FirstOrderedTaskList;
+		
+
+//		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
+//		int serviceId = orderedService.getService().getId();
+//
+//		Task startingTask = workFlowService.getFirstTask(serviceId);
+//		
+//
+//		OrderedTask FirstOrderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, startingTask.getId());
+//		
+//		return FirstOrderedTask;
 	}
 
 	@Override
 	public OrderedTask findOrderedTaskByTask(Integer taskId, int orderedServiceId) {
-
+		
 		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
+
+//		List<OrderedTask> orderedTaskList = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
 
 		return orderedTask;
 	}

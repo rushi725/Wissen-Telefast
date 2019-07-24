@@ -56,12 +56,6 @@ public class OrderedServiceController {
 	@Autowired
 	private OrderedTaskRepository orderedTaskRepository;
 	
-	@PutMapping("/{orderedServiceId}/cancel")
-	public ResponseEntity<?> cancelService(@RequestBody String reason,@PathVariable int orderedServiceId) {
-
-		boolean b = orderedServiceService.cancelOrderedService(reason, orderedServiceId);
-		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
-	}
 	
 	@PutMapping("/{orderedServiceId}/complete")
 	public ResponseEntity<?> completeService(@PathVariable int orderedServiceId){

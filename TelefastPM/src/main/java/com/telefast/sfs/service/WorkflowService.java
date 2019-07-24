@@ -9,7 +9,7 @@ public interface WorkflowService {
 	
 	void defineWorkflow(List<ServiceWorkflow> workflows);
 
-	Task getFirstTask(int serviceId);
+	List<Task> getFirstTask(int serviceId);
 
 	
 //	List<Integer> findChildrenIds(int taskId, int serviceId);

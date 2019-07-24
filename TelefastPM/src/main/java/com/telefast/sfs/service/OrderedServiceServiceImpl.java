@@ -36,18 +36,7 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 	@Autowired
 	private OrderedTaskRepository orderedTaskRepository;
 
-	@Override
-	public boolean cancelOrderedService(String reason, int orderedServiceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
-		orderedService.setServiceDenialReason(reason);
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedServiceRepository.save(orderedService);
-		
-		if(orderedService.getServiceStatus()==Status.CANCELLED)
-		return true;
-		
-		else return false;
-	}
+
 
 	@Override
 	public List<OrderedService> findAllOrderedServicesByServiceManagerId(int serviceManagerId) {
@@ -85,18 +74,7 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 		else return true;
 	}
 
-	@Override
-	public boolean cancelService(String reason, int orderedServiceId) {
-		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
-		orderedService.setServiceDenialReason(reason);
-		orderedService.setServiceStatus(Status.CANCELLED);
-		orderedService = orderedServiceRepository.save(orderedService);
-		
-		orderedService = orderedServiceRepository.save(orderedService);
-		if(orderedService == null)
-			return false;
-		else return true;
-	}
+
 
 	@Override
 	public boolean completeService(int orderedServiceId) {
@@ -114,14 +92,35 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 		
 		List<OrderedTask> list = orderedTaskRepository.findByOrderedService(orderedService);
 		
-		int totalOrderedTask = list.size();
+		double totalOrderedTask = list.size();
 		
-		int completedOrderedTask = (int) list.stream().filter(e->e.getTaskStatus()==Status.COMPLETED).count();
+		double completedOrderedTask = list.stream().filter(e->e.getTaskStatus()==Status.COMPLETED).count();
 		
-		int progress = completedOrderedTask/totalOrderedTask*100;
+		double progress = (completedOrderedTask/totalOrderedTask)*100;
 		
-		orderedService.setProgress(progress);
+		orderedService.setProgress((int)progress);
+		if(progress==100) {
+			orderedService.setServiceStatus(Status.COMPLETED);
+		}
 		orderedServiceRepository.save(orderedService);
 	}
+
+	@Override
+	public void updateProjectProgress(Project project) {
+		
+		List<OrderedService> serviceList = orderedServiceRepository.findByProject(project);
+		
+		double totalServices = serviceList.size();
+		
+		double completedOrderedServices = serviceList.stream().filter(e->e.getServiceStatus()==Status.COMPLETED).count();
+		
+		double progress = (completedOrderedServices/totalServices)*100;
+		project.setProgress((int)progress);
+		if(progress==100) {
+			project.setStatus(Status.COMPLETED);
+		}
+		projectRepository.save(project);
+	}
+	
 
 }

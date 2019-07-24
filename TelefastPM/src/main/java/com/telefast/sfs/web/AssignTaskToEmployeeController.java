@@ -24,13 +24,13 @@ public class AssignTaskToEmployeeController {
 	private OrderedTaskService orderedTaskService;
 
 	//Assign Task to employee
-	@PutMapping("/employee/{serviceId}/{taskId}/{orderedServiceId}")
-	public ResponseEntity<?> assignTask(@PathVariable int serviceId,@PathVariable int taskId,@PathVariable int orderedServiceId){
-
-		boolean response = taskService.assignTaskToEmployee(taskId,serviceId,orderedServiceId);
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-		
-	}
+//	@PutMapping("/employee/{serviceId}/{taskId}/{orderedServiceId}")
+//	public ResponseEntity<?> assignTask(@PathVariable int serviceId,@PathVariable int taskId,@PathVariable int orderedServiceId){
+//
+//		boolean response = taskService.assignTaskToEmployee(taskId,serviceId,orderedServiceId);
+//		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+//		
+//	}
 	
 	//assign task to employeeId // transfer task to employee
 	@PutMapping(value = "/{orderedTaskId}/{employeeId}")

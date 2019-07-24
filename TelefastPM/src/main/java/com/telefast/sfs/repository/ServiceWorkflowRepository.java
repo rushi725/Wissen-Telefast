@@ -31,6 +31,6 @@ public interface ServiceWorkflowRepository extends JpaRepository<ServiceWorkflow
 	List<ServiceWorkflow> findByService(Service service);
 
 	@Query("select s.task from ServiceWorkflow s where s.service.serviceId=?1 and s.prevTask=0")
-	Task getFirstTask(int serviceId);
+	List<Task> getFirstTask(int serviceId);
 
 }

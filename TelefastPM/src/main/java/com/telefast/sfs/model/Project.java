@@ -2,6 +2,7 @@ package com.telefast.sfs.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -42,11 +43,11 @@ public class Project {
 		this.description = description;
 	}
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customerId")
 	private Customer customer;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "employeeId")
 	private Employee projectManager;
 	

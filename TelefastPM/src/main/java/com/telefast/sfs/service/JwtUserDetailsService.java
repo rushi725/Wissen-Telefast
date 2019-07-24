@@ -25,7 +25,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 		if (user.getEmail().equals(username)) {
 			Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 			Employee emp = user.getEmployee();
-			System.out.println(emp.getEmpRole().toString());
 			grantedAuthorities.add(new SimpleGrantedAuthority(emp.getEmpRole().toString()));
 			return new User(username,user.getPassword(),
 					grantedAuthorities);

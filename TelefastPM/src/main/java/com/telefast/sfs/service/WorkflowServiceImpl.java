@@ -33,11 +33,11 @@ public class WorkflowServiceImpl implements WorkflowService{
 	}
 
 	@Override
-	public Task getFirstTask(int serviceId) {
+	public List<Task> getFirstTask(int serviceId) {
 		
-		Task task = serviceWorkflowRepository.getFirstTask(serviceId);
+		List<Task> taskList = serviceWorkflowRepository.getFirstTask(serviceId);
 		
-		return task;
+		return taskList;
 	}
 
 //	@Override

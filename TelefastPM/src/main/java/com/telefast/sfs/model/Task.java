@@ -18,7 +18,7 @@ public class Task {
 	private int taskId;
 	private String name;
 	private String description;
-	private Boolean approvalNeeded;
+	private boolean approvalNeeded;
 
 	public Task() {
 
