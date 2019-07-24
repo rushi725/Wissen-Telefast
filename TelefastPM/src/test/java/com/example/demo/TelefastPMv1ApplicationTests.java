@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = TelefastPMv1ApplicationTests.class)
 public class TelefastPMv1ApplicationTests {
 
 	@Test

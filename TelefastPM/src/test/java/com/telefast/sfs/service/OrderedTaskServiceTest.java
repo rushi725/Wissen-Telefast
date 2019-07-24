@@ -47,7 +47,7 @@ public class OrderedTaskServiceTest {
 
 	@Test
 	public void changeStatusTest() {
-		assertTrue(orderedTaskService.changeStatus(1, 5));
+		assertTrue(orderedTaskService.changeStatus(1, 1));
 	}
 
 	@Test

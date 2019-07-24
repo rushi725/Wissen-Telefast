@@ -1,6 +1,7 @@
 package com.telefast.sfs.service;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,18 +66,19 @@ public class TaskServiceImpl implements TaskService {
 		// TODO Auto-generated method stub
 		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
 		Team team = serviceWorkflow.getTeam();
-
 		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
-
 		List<Employee> employees = employeeRepository.findAllByTeamId(team.getId());
-		for (Employee employee : employees) {
+		int length = employees.size();
+		if (length == 0)
+			return false;
+		Random rand = new Random();
+		int n = rand.nextInt(length);
+		Employee employee = employees.get(n);
+		orderedTask.setEmployee(employee);
+		employee.setAvailableStatus(false);
+		orderedTaskRepository.save(orderedTask);
+		return true;
 
-			orderedTask.setEmployee(employee);
-			employee.setAvailableStatus(false);
-			orderedTaskRepository.save(orderedTask);
-			return true;
-		}
-		return false;
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.telefast.sfs.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +30,11 @@ public class WorkflowServiceTest {
 	public void getFirstTaskTest() {
 		Task actual = workflowService.getFirstTask(60);
 		assertThat(actual instanceof Task);
+	}
+	@Test
+	public void findChildrensByPrevTaskTest() {
+		List<Task> actual =  workflowService.findChildrensByPrevTask(60);
+		assertThat(true);
 	}
 
 }
