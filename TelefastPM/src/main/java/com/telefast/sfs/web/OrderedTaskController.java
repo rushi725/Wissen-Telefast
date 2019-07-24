@@ -88,6 +88,7 @@ public class OrderedTaskController {
 	@PutMapping("/{orderedTaskId}/complete")
 	public ResponseEntity<?> completeTask(@PathVariable int orderedTaskId) {
 		boolean b = orderedTaskService.approveTask(orderedTaskId);
+		
 		return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
 	}
 
@@ -117,6 +118,7 @@ public class OrderedTaskController {
 	// get all OrderedTasks assigned to a team by teamManagerId
 	@GetMapping(value = "/teamManager/{teamManagerId}")
 	public ResponseEntity<?> getTasksByTeamManager(@PathVariable int teamManagerId) {
+		System.out.println(teamManagerId);
 		List<OrderedTask> orderedTaskList = orderedTaskService.getOrderedTaskAssignedToTeamManager(teamManagerId);
 		return new ResponseEntity<>(orderedTaskList, HttpStatus.CREATED);
 	}

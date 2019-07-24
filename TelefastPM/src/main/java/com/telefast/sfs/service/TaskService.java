@@ -11,7 +11,7 @@ public interface TaskService {
 	
 	boolean assignOrderedTask(OrderedTask orderedTask);
 
-	boolean assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId);
+//	boolean assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId);
 	
 //	Task getTaskByEmploye(int employeeId);
 

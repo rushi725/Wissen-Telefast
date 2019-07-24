@@ -1,5 +1,6 @@
 package com.telefast.sfs.web;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.telefast.sfs.model.Task;
 import com.telefast.sfs.repository.OrderedServiceRepository;
 import com.telefast.sfs.repository.OrderedTaskRepository;
 import com.telefast.sfs.repository.OredredTaskTeamRepository;
+import com.telefast.sfs.repository.ProjectRepository;
 import com.telefast.sfs.repository.TasksRepository;
 import com.telefast.sfs.service.OrderedServiceService;
 import com.telefast.sfs.service.OrderedTaskService;
@@ -40,9 +42,6 @@ public class StartService {
 	private OrderedServiceService orderedServiceService;
 	
 	@Autowired
-	private OrderedServiceRepository orderedServiceRepository;
-	
-	@Autowired
 	private TasksRepository taskRepository;
 	
 	@Autowired
@@ -51,32 +50,32 @@ public class StartService {
 	@Autowired
 	private OrderedTaskRepository orderedTaskRepository;
 	
+	@Autowired
+	private OrderedServiceRepository orderedServiceRepository;
+	
 	
 	
 	
 	@PutMapping("/{orderedServiceId}")
 	public ResponseEntity<?> startService(@PathVariable int orderedServiceId, @RequestBody String s){
-//		int count = workFlowService.getSequenceCount(serviceid);
 		
-		OrderedTask orderedTask = orderedTaskService.getFisrtOrderedTask(orderedServiceId);
-		System.out.println(orderedTask.getTask().getName());
-		int id = orderedTask.getOrderTaskId();
-		System.out.println(id);
+		List<OrderedTask> orderedTaskList = orderedTaskService.getFisrtOrderedTask(orderedServiceId);
 		
 		OrderedService orderedService = orderedServiceRepository.findById(orderedServiceId).get();
 		
+		System.out.println("printing ordered tasks ordereddService-->"+orderedServiceId);
+		orderedTaskList.forEach(e -> System.out.println(e.getTask().getId()));
+		
+		orderedTaskList.forEach(e->taskService.assignOrderedTask(e));
+//		boolean response = taskService.assignOrderedTask(orderedTask);
+		
 		orderedService.setServiceStatus(Status.IN_PROGRESS);
+		orderedService.getProject().setStatus(Status.IN_PROGRESS);
 		orderedServiceRepository.save(orderedService);
+
 		
-		System.out.println("---------------------------->");
-		System.out.println(orderedService.getServiceStatus());
 		
-		boolean response = taskService.assignOrderedTask(orderedTask);
-		
-		System.out.println("response---------------->");
-		System.out.println(response);
-		
-		return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(orderedServiceRepository.save(orderedService), HttpStatus.ACCEPTED);
 			
 	}
 	
@@ -84,15 +83,17 @@ public class StartService {
 	public void startNextTasks(@PathVariable int orderedTaskId){
 		
 		OrderedTask completedTask = orderedTaskRepository.findById(orderedTaskId).get();
-		
-		orderedServiceService.updateProgress(completedTask.getOrderedService());
-		
-		System.out.println("inside starting next task---->");
+		completedTask.setEndDate(LocalDate.now());
+		orderedTaskRepository.save(completedTask);
 				
 		List<Task> childrenTasks = workFlowService.findChildrensByPrevTask(orderedTaskId);
 		
-		childrenTasks.forEach(e->System.out.println(e.getName()));
-
+		System.out.println("printing children task ids of-->"+orderedTaskId);
+		
+		for(Task task:childrenTasks) {
+			System.out.println(task.getId());
+		}
+		
 		OrderedTask orderedTask = orderedTaskRepository.findById(orderedTaskId).get();
 		OrderedService orderedService = orderedTask.getOrderedService();
 		int orderedServiceId = orderedService.getOrderId();
@@ -101,6 +102,9 @@ public class StartService {
 			OrderedTask nextOrderedTask = orderedTaskService.findOrderedTaskByTask(task.getId(),orderedServiceId);
 			taskService.assignOrderedTask(nextOrderedTask);
 		}
+		
+		orderedServiceService.updateProgress(completedTask.getOrderedService());
+		orderedServiceService.updateProjectProgress(completedTask.getOrderedService().getProject());
 		
 	}
 

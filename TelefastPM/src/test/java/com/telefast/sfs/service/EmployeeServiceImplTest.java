@@ -38,7 +38,7 @@ public class EmployeeServiceImplTest {
 
 	@Test
 	public void TestGetAllInfoForEmployeeId() {
-		List<OrderedTask> orderedTaskList = employeeService.getAllInfoForEmployeeId(21);
+		List<OrderedTask> orderedTaskList = employeeService.getAllInfoForEmployeeId(4);
 		assertThat(orderedTaskList, instanceOf(List.class));
 	}
 }

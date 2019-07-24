@@ -1,5 +1,6 @@
 package com.telefast.sfs.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,24 +61,24 @@ public class TaskServiceImpl implements TaskService {
 //		return taskIds;
 //	}
 
-	@Override
-	public boolean assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
-		// TODO Auto-generated method stub
-		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
-		Team team = serviceWorkflow.getTeam();
-
-		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
-
-		List<Employee> employees = employeeRepository.findAllByTeamId(team.getId());
-		for (Employee employee : employees) {
-
-			orderedTask.setEmployee(employee);
-			employee.setAvailableStatus(false);
-			orderedTaskRepository.save(orderedTask);
-			return true;
-		}
-		return false;
-	}
+//	@Override
+//	public boolean assignTaskToEmployee(int taskId, int serviceId, int orderedServiceId) {
+//		// TODO Auto-generated method stub
+////		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
+////		Team team = serviceWorkflow.getTeam();
+////
+////		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
+////
+////		List<Employee> employees = employeeRepository.findAllAvailableByTeamId(team.getId());
+////		for (Employee employee : employees) {
+////
+////			orderedTask.setEmployee(employee);
+////			employee.setAvailableStatus(false);
+////			orderedTaskRepository.save(orderedTask);
+////			return true;
+////		}
+//		return false;
+//	}
 
 	@Override
 	public boolean assignTaskToTeam(int serviceId, int taskId, int teamId, int sequenceNo) {
@@ -117,13 +118,13 @@ public class TaskServiceImpl implements TaskService {
 		ServiceWorkflow serviceWorkflow = serviceWorkflowRepository.getByTaskAndService(taskId, serviceId);
 		Team team = serviceWorkflow.getTeam();
 
-//		OrderedTask orderedTask = orderedTaskRepository.findOrderTaskId(orderedServiceId, taskId);
-
-		List<Employee> employees = employeeRepository.findAllByTeamId(team.getId());
+		List<Employee> employees = employeeRepository.findAllAvailableByTeamId(team.getId());
 		for (Employee employee : employees) {
 
 			orderedTask.setEmployee(employee);
 			employee.setAvailableStatus(false);
+			orderedTask.setStartDate(LocalDate.now());
+			
 			orderedTaskRepository.save(orderedTask);
 			return true;
 		}

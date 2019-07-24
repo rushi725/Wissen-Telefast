@@ -42,20 +42,20 @@ public class OrderedServiceServiceTest {
 
 	@Test
 	public void cancelOrderedServiceTest() {
-		boolean actual = orderedServiceService.cancelOrderedService("testing", 60);
+		boolean actual = orderedServiceService.cancelOrderedService("testing", 32);
 		assertTrue(actual);
 	}
-
+ 
 	@Test
 	public void findAllOrderedServicesByServiceManagerIdTest() {
-		List<OrderedService> orderedServices = orderedServiceService.findAllOrderedServicesByServiceManagerId(58);
-		assertTrue(orderedServices.stream().allMatch(os -> os.getEmployee().getId() == 58));
+		List<OrderedService> orderedServices = orderedServiceService.findAllOrderedServicesByServiceManagerId(14);
+		assertTrue(orderedServices.stream().allMatch(os -> os.getEmployee().getId() == 14));
 	}
 
 	@Test
 	public void findAllOrderedServiceByProjectManagerIdTest() {
-		List<OrderedService> orderedServices = orderedServiceService.findAllOrderedServiceByProjectManagerId(58);
-		assertTrue(orderedServices.stream().allMatch(e -> e.getProject().getProjectManager().getId() == 58));
+		List<OrderedService> orderedServices = orderedServiceService.findAllOrderedServiceByProjectManagerId(16);
+		assertTrue(orderedServices.stream().allMatch(e -> e.getProject().getProjectManager().getId() == 16));
 	}
 
 //	@Test
@@ -98,7 +98,7 @@ public class OrderedServiceServiceTest {
 
 	@Test
 	public void completeServiceTest() {
-		assertTrue(orderedServiceService.completeService(60));
+		assertTrue(orderedServiceService.completeService(32));
 	}
 
 }

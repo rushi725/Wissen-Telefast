@@ -121,7 +121,28 @@ public class OrderedServiceServiceImpl implements OrderedServiceService {
 		double progress = (completedOrderedTask/totalOrderedTask)*100;
 		
 		orderedService.setProgress((int)progress);
+		if(progress==100) {
+			orderedService.setServiceStatus(Status.COMPLETED);
+		}
 		orderedServiceRepository.save(orderedService);
 	}
+
+	@Override
+	public void updateProjectProgress(Project project) {
+		
+		List<OrderedService> serviceList = orderedServiceRepository.findByProject(project);
+		
+		double totalServices = serviceList.size();
+		
+		double completedOrderedServices = serviceList.stream().filter(e->e.getServiceStatus()==Status.COMPLETED).count();
+		
+		double progress = (completedOrderedServices/totalServices)*100;
+		project.setProgress((int)progress);
+		if(progress==100) {
+			project.setStatus(Status.COMPLETED);
+		}
+		projectRepository.save(project);
+	}
+	
 
 }

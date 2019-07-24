@@ -3,6 +3,7 @@ package com.telefast.sfs.service;
 import java.util.List;
 
 import com.telefast.sfs.model.OrderedService;
+import com.telefast.sfs.model.Project;
 
 
 public interface OrderedServiceService {
@@ -20,5 +21,7 @@ public interface OrderedServiceService {
 	boolean completeService(int orderedServiceId);
 
 	void updateProgress(OrderedService orderedService);
+
+	void updateProjectProgress(Project project);
 
 }

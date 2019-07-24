@@ -12,12 +12,13 @@ import com.telefast.sfs.model.OrderedService;
 import com.telefast.sfs.model.OrderedTask;
 import com.telefast.sfs.model.Service;
 import com.telefast.sfs.model.Status;
+import com.telefast.sfs.model.Task;
 
 @Repository
 public interface OrderedTaskRepository extends JpaRepository<OrderedTask, Integer> {
 //	
 	@Query("from OrderedTask o where o.orderedService.orderedServiceId=?1 and o.task.taskId=?2")
-	OrderedTask findOrderTaskId(int orderServiceId,int taskId);
+	OrderedTask findOrderTaskId(int orderServiceId, int taskId);
 
 	@Query("from OrderedTask o where o.employee.employeeId=?1")
 	List<OrderedTask> findByEmployeeId(int employeeId);

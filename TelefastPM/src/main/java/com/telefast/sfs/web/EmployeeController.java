@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.telefast.sfs.model.EmpRole;
 import com.telefast.sfs.model.Employee;
+import com.telefast.sfs.model.Team;
 import com.telefast.sfs.repository.EmployeeRepository;
+import com.telefast.sfs.repository.TeamRepository;
 import com.telefast.sfs.service.EmployeeService;
-import com.telefast.sfs.service.EmployeeServiceImpl;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -26,6 +27,8 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	@Autowired
+	private TeamRepository teamRepo;
 	
 	@Autowired
 	private EmployeeService employeeService;
@@ -36,6 +39,7 @@ public class EmployeeController {
 		return employeeRepository.findAll();
 	}
 	
+	//find all service managers
 	@GetMapping("/serviceManager")
 	public ResponseEntity<?> getAllServiceManagers(){
 		return new ResponseEntity<>(employeeRepository.findAllServiceManagers(), HttpStatus.ACCEPTED);
@@ -49,16 +53,32 @@ public class EmployeeController {
 	
 	//get all available employees from teamId
 	@GetMapping("/{teamId}/employees")
-	public ResponseEntity<?> getAllEmployees(@PathVariable int teamId){
+	public ResponseEntity<?> getAllAvailableEmployees(@PathVariable int teamId){
 		List<Employee> list = employeeService.allAvailableEmployees(teamId);
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
-
+	 }
+	
+	//get all employees for a team
+	@GetMapping("/{teamId}/allEmployees")
+	public ResponseEntity<?> getAllEmployees(@PathVariable int teamId){
+		List<Employee> list = employeeRepository.findAllByTeamId(teamId);
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping
-	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
 	
+	@GetMapping("/id/{empContactNo}")
+	public int getEmployeeId(@PathVariable String empContactNo) {
+		return employeeRepository.getEmpId(empContactNo);
+	}
+
+	
+	@PostMapping("/{teamId}")
+	public ResponseEntity<?> addEmployee(@RequestBody Employee employee,@PathVariable int teamId) {
+		Team team =teamRepo.findById(teamId).get();
+		employee.setAvailableStatus(true);
+		employee.setTeam(team);
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
+
 	}
 	
 	@GetMapping("/{empRole}")
@@ -66,6 +86,7 @@ public class EmployeeController {
 		List<Employee> list = employeeRepository.findByEmpRole(empRole);
 		
 		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+
 	}
 
 }

@@ -12,5 +12,7 @@ public interface EmployeeService {
 	List<Employee> allAvailableEmployees(int teamId);
 		
 	List<OrderedTask> getAllInfoForEmployeeId(int employeeId);
+	
+	List<Employee> getAllEmployeesByTeam(int teamid);
 
 }
