@@ -27,7 +27,7 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int employeeId;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "teamId")
 	private Team team;
 	private String firstName;

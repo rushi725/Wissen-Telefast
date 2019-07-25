@@ -76,6 +76,11 @@ public class EmployeeController {
 	@PostMapping()
 	@PreAuthorize("hasRole('ROLE_SUPER')")
 	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
+		Team team = new Team();
+		if(employee.getTeam() != null) {
+			team = teamRepo.findById(employee.getTeam().getId()).get();
+			employee.setTeam(team);
+		}
 		employee.setAvailableStatus(true);
 		return new ResponseEntity<>(employeeRepository.save(employee), HttpStatus.CREATED);
 	}
