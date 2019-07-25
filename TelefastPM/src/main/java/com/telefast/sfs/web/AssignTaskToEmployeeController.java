@@ -3,6 +3,7 @@ package com.telefast.sfs.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +35,7 @@ public class AssignTaskToEmployeeController {
 	
 	//assign task to employeeId // transfer task to employee
 	@PutMapping(value = "/{orderedTaskId}/{employeeId}")
+	@PreAuthorize("hasRole=('ROLE_TEAM_MANAGER')")
 	public ResponseEntity<?> transferTaskToEmployee(@PathVariable int orderedTaskId, @PathVariable int employeeId){
 		
 		boolean b =orderedTaskService.transferTask(orderedTaskId, employeeId);

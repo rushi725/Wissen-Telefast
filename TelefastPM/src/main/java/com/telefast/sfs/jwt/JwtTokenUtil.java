@@ -5,9 +5,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.telefast.sfs.model.Employee;
+import com.telefast.sfs.model.User;
+import com.telefast.sfs.repository.EmployeeRepository;
+import com.telefast.sfs.repository.UserRepository;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,6 +26,10 @@ public class JwtTokenUtil implements Serializable {
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 	@Value("${jwt.secret}")
 	private String secret;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 //retrieve username from jwt token
 	public String getUsernameFromToken(String token) {
@@ -49,6 +61,9 @@ public class JwtTokenUtil implements Serializable {
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("autho",userDetails.getAuthorities());
+		User user = userRepository.findByUserName(userDetails.getUsername());
+		Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
+		claims.put("employee",employee);
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 

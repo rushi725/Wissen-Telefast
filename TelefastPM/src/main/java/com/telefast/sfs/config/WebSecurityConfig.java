@@ -59,8 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login").permitAll()
 
 				.antMatchers("/sfs/**").permitAll()
-				.antMatchers("/sfs/employees/**").permitAll()
-
+				.antMatchers(HttpMethod.GET,"/sfs/employees/**").permitAll()
+				//.antMatchers("/sfs/employees").hasRole("ROLE_SUPER")
 				// .antMatchers(HttpMethod.GET,"/sfs/user/**").permitAll()
 				.antMatchers("/sfs/user/**").permitAll()
 

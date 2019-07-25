@@ -74,11 +74,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>oracle</groupId>
-			<artifactId>ojdbc</artifactId>
-			<version>6</version>
-			<scope>system</scope>
-			<systemPath>C:\Users\rusha\Downloads\ojdbc6.jar\ojdbc6.jar</systemPath>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 	</dependencies>
