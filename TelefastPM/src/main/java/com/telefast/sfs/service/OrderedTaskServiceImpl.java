@@ -127,12 +127,18 @@ public class OrderedTaskServiceImpl implements OrderedTaskService {
 	public boolean transferTask(int orderedTaskId, int toEmployeeId) {
 		Employee toEmployee = employeeRepository.findById(toEmployeeId).get();
 		OrderedTask orderedTask = orderedTaskRepository.findById(orderedTaskId).get();
-		Employee fromEmployee = orderedTask.getEmployee();
-
+		
 		// set available status to true for fromEmployee
-		fromEmployee.setAvailableStatus(true);
+		if(orderedTask.getEmployee()!=null) {
+			Employee fromEmployee = orderedTask.getEmployee();
+			fromEmployee.setAvailableStatus(true);
+		}
 
 		// set available status to false for toEmployee
+		
+		if(orderedTask.getTaskStatus()==Status.BLOCKED)
+			orderedTask.setTaskStatus(Status.NOT_STARTED);
+		
 		orderedTask.setEmployee(toEmployee);
 		toEmployee.setAvailableStatus(false);
 

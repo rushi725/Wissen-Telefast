@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,12 @@ private RestTemplate restTemplate= new RestTemplate();
 		return new ResponseEntity<>(serviceRepository.findAll(), HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("/{serviceId}")
+	public ResponseEntity<?> getService(@PathVariable int serviceId){
+		return new ResponseEntity<>(serviceRepository.findById(serviceId).get(), HttpStatus.ACCEPTED);
+	}
+	
+	
 	//get all tasks by serviceId
 	@GetMapping("/{serviceId}/tasks")
 	public ResponseEntity<?> getTasksByServiceId(@PathVariable String serviceId){
@@ -78,6 +85,13 @@ private RestTemplate restTemplate= new RestTemplate();
 	@PostMapping
 	public ResponseEntity<?> addService(@RequestBody Service service){
 		return new ResponseEntity<>(serviceRepository.save(service), HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/delete/{serviceId}")
+	public ResponseEntity<?> deleteService(@PathVariable int serviceId){
+		Service service = serviceRepository.findById(serviceId).get();
+		serviceRepository.delete(service);
+		return new ResponseEntity<>("service deleted", HttpStatus.ACCEPTED);
 	}
 	
 	

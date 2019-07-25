@@ -66,8 +66,14 @@ public class StartService {
 		System.out.println("printing ordered tasks ordereddService-->"+orderedServiceId);
 		orderedTaskList.forEach(e -> System.out.println(e.getTask().getId()));
 		
-		orderedTaskList.forEach(e->taskService.assignOrderedTask(e));
-//		boolean response = taskService.assignOrderedTask(orderedTask);
+		
+		for(OrderedTask orderedTask:orderedTaskList) {
+			if(taskService.assignOrderedTask(orderedTask)==false) {
+				orderedTask.setTaskStatus(Status.BLOCKED);
+			}
+		}
+		
+//		orderedTaskList.forEach(e->taskService.assignOrderedTask(e));
 		
 		orderedService.setServiceStatus(Status.IN_PROGRESS);
 		orderedService.getProject().setStatus(Status.IN_PROGRESS);
@@ -100,7 +106,9 @@ public class StartService {
 		
 		for(Task task:childrenTasks) {
 			OrderedTask nextOrderedTask = orderedTaskService.findOrderedTaskByTask(task.getId(),orderedServiceId);
-			taskService.assignOrderedTask(nextOrderedTask);
+			if(taskService.assignOrderedTask(nextOrderedTask)==false) {
+				nextOrderedTask.setTaskStatus(Status.BLOCKED);
+			}
 		}
 		
 		orderedServiceService.updateProgress(completedTask.getOrderedService());
