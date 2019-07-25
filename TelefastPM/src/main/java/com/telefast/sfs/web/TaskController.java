@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -157,10 +159,23 @@ public class TaskController {
 	public List<Task> getTask() {
 		return tasksRepository.findAll();
 	}
+	
+	//get task info by taskId
+	@GetMapping("/{taskId}")
+	public ResponseEntity<?> getTask(@PathVariable int taskId){
+		return new ResponseEntity<>(tasksRepository.findById(taskId).get(), HttpStatus.ACCEPTED);
+	}
 
 	@PostMapping
 	public ResponseEntity<?> addTask(@RequestBody Task task) {
 		return new ResponseEntity<>(tasksRepository.save(task), HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/delete/{taskId}")
+	public void deleteTask(@PathVariable int taskId){
+//		return new ResponseEntity<>(tasksRepository.delete(task), HttpStatus.ACCEPTED);
+		Task task = tasksRepository.findById(taskId).get();
+		tasksRepository.delete(task);
 	}
 
 	// -------------------------------------------------------------------

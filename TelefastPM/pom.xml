@@ -78,7 +78,7 @@
 			<artifactId>ojdbc</artifactId>
 			<version>6</version>
 			<scope>system</scope>
-			<systemPath>C:\Users\rusha\Downloads\ojdbc6.jar\ojdbc6.jar</systemPath>
+			<systemPath>C:\Users\shant\Desktop\Oracle_Training\ojdbc6.jar</systemPath>
 		</dependency>
 
 	</dependencies>

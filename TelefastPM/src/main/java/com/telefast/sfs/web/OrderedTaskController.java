@@ -122,5 +122,4 @@ public class OrderedTaskController {
 		List<OrderedTask> orderedTaskList = orderedTaskService.getOrderedTaskAssignedToTeamManager(teamManagerId);
 		return new ResponseEntity<>(orderedTaskList, HttpStatus.ACCEPTED);
 	}
-
 }
