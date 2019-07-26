@@ -18,7 +18,7 @@ import com.telefast.sfs.service.TaskService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("sfs/transferTask")
+@RequestMapping("sfs/transferTask") 
 public class TransferController {
 	
 	@Autowired

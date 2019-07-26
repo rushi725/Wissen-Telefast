@@ -35,7 +35,7 @@ public class UserController {
 	}
 
 
-	@PreAuthorize("hasRole('ROLE_SUPER')")
+//	@PreAuthorize("hasRole('ROLE_SUPER')")
 	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@RequestBody User user) {
 		Employee employee = employeeRepo.findById(user.getEmployee().getId()).get();

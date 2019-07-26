@@ -35,7 +35,7 @@ public class AssignTaskToEmployeeController {
 	
 	//assign task to employeeId // transfer task to employee
 	@PutMapping(value = "/{orderedTaskId}/{employeeId}")
-	@PreAuthorize("hasRole=('ROLE_TEAM_MANAGER')")
+	//@PreAuthorize("hasRole=('ROLE_TEAM_MANAGER')")
 	public ResponseEntity<?> transferTaskToEmployee(@PathVariable int orderedTaskId, @PathVariable int employeeId){
 		
 		boolean b =orderedTaskService.transferTask(orderedTaskId, employeeId);

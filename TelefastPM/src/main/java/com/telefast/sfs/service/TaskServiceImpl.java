@@ -148,6 +148,7 @@ public class TaskServiceImpl implements TaskService {
 		int n = rand.nextInt(length);
 		Employee employee = employees.get(n);
 		orderedTask.setEmployee(employee);
+		orderedTask.setStartDate(LocalDate.now());
 		employee.setAvailableStatus(false);
 		orderedTaskRepository.save(orderedTask);
 		return true;
